@@ -41,7 +41,7 @@
 	H.adjust_skillrank(/datum/skill/combat/unarmed, pick(1,2,3,4,5), TRUE) // is this a good idea? Probably not, but the idea of a master fighter jester with 20 str is too good to pass on, this can only go well
 	H.adjust_skillrank(/datum/skill/combat/wrestling, rand(1,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, rand(1,4), TRUE)
-	H.adjust_skillrank(/datum/skill/craft/cooking, pick(1,2,3), TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, rand(1,3), TRUE)
 	H.STASTR = rand(1, 21)
 	H.STAEND = rand(1, 21)
 	H.STACON = rand(1, 21)
