@@ -37,7 +37,7 @@
 	H.adjust_skillrank(/datum/skill/misc/stealing, pick(1,2,3,4,4,4,5,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, pick(4,5,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, pick(4,5,6), TRUE) //a showman like no other. you need to be fit to perform.
-	H.adjust_skillrank(/datum/skill/misc/music, pick(1,4,4,6), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/music, rand(1,6), TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, pick(1,2,3,4,5), TRUE) // is this a good idea? Probably not, but the idea of a master fighter jester with 20 str is too good to pass on, this can only go well
 	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(1,2,3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, pick(2,3,3,4), TRUE)
