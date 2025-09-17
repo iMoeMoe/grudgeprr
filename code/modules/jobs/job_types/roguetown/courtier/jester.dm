@@ -32,7 +32,7 @@
 	head = /obj/item/clothing/head/roguetown/jester
 	neck = /obj/item/clothing/neck/roguetown/coif
 	H.adjust_skillrank(/datum/skill/combat/knives, rand(1,4), TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, pick(0,1), TRUE) // might just be an illiterate fuck, more likely than not
+	H.adjust_skillrank(/datum/skill/misc/reading, rand(0,1), TRUE) // might just be an illiterate fuck, more likely than not
 	H.adjust_skillrank(/datum/skill/misc/sneaking, rand(1,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, rand(1,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, rand(2,6), TRUE)
