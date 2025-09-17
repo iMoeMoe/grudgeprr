@@ -33,7 +33,7 @@
 	neck = /obj/item/clothing/neck/roguetown/coif
 	H.adjust_skillrank(/datum/skill/combat/knives, pick(3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, pick(0,1), TRUE) // might just be an illiterate fuck, more likely than not
-	H.adjust_skillrank(/datum/skill/misc/sneaking, pick(1,2,3,4,4,4,5,6), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, rand(1,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, pick(1,2,3,4,4,4,5,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, pick(4,5,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, pick(4,5,6), TRUE) //a showman like no other. you need to be fit to perform.
