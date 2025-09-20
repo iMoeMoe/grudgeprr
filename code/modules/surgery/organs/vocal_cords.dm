@@ -5,7 +5,8 @@
 
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
-	icon_state = "appendix"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "vocal_cords"
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
@@ -21,6 +22,40 @@
 
 /obj/item/organ/vocal_cords/proc/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
+
+///harpy song stuff///
+
+/obj/item/organ/vocal_cords/harpy
+	name = "harpy's song"
+	icon_state = "harpysong"		//Pulsating heart energy thing.
+	desc = "The blessed essence of harpysong. How did you get this... you monster!"
+	actions_types = list(/datum/action/item_action/organ_action/use)
+	var/obj/item/rogue/instrument/vocals/harpy_vocals/vocals
+
+/obj/item/organ/vocal_cords/harpy/Initialize()
+	. = ..()
+	vocals = new(src)  //okay, i think it'll be tied to the organ
+
+/obj/item/organ/vocal_cords/harpy/Insert(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(M.mind)
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/retreat)
+
+/obj/item/organ/vocal_cords/harpy/Remove(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	to_chat(world, "removed cords")
+	if(M.mind)
+		to_chat(world, "should remove spell")
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/order/retreat)
+
+/obj/item/organ/vocal_cords/harpy/ui_action_click(owner)
+	name = "Harpy's song"
+	desc = "Project your voice through song."
+	var/mob/living/carbon/human/user = owner
+	var/obj/item/organ/vocal_cords/harpy/vocal_cords = user.getorganslot(ORGAN_SLOT_VOICE)
+	if(!istype(vocal_cords) || !vocal_cords.vocals)
+		return
+	vocal_cords.vocals.attack_self(user)
 
 /obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"

@@ -366,3 +366,16 @@
 		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/pinecone
 		)
+
+/datum/customizer/organ/tail/harpy
+	customizer_choices = list(/datum/customizer_choice/organ/tail/harpy)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/tail/harpy
+	name = "Harpy Tail"
+	organ_type = /obj/item/organ/tail
+	generic_random_pick = TRUE
+	sprite_accessories = list(
+		/datum/sprite_accessory/tail/corvid,
+		/datum/sprite_accessory/tail/hawk,
+	)

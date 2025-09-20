@@ -1824,6 +1824,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\furry\moth.dm"
 #include "code\modules\mob\living\carbon\human\species_types\furry\tabaxi.dm"
 #include "code\modules\mob\living\carbon\human\species_types\furry\vulpkanin.dm"
+#include "code\modules\mob\living\carbon\human\species_types\furry\harpy.dm"
 #include "code\modules\mob\living\carbon\human\species_types\roguetown\roguetown_species.dm"
 #include "code\modules\mob\living\carbon\human\species_types\roguetown\dullahan\dullahan.dm"
 #include "code\modules\mob\living\carbon\human\species_types\roguetown\dullahan\dullahan_head.dm"

@@ -27,6 +27,9 @@
 	grid_height = 64
 	grid_width = 32
 
+	/// Instrument is in some other holder such as an organ or item.
+	var/not_held = FALSE
+
 /obj/item/rogue/instrument/equipped(mob/living/user, slot)
 	. = ..()
 	if(playing && user.get_active_held_item() != src)
@@ -88,7 +91,7 @@
 			if(!choice || !user)
 				return
 				
-			if(playing || !(src in user.held_items) || user.get_inactive_held_item())
+			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
 				return
 				
 			if(choice == "Upload New Song")
@@ -121,7 +124,7 @@
 					song_list[songname] = curfile
 				return
 			curfile = song_list[choice]
-			if(!user || playing || !(src in user.held_items))
+			if(!user || playing || !(src in user.held_items) && !(not_held))
 				return
 			if(user.mind)
 				switch(user.get_skill_level(/datum/skill/misc/music))
@@ -150,7 +153,7 @@
 						soundloop.stress2give = stressevent
 					else
 						soundloop.stress2give = stressevent
-			if(!(src in user.held_items))
+			if(!(src in user.held_items) && !(not_held))
 				return
 			if(user.get_inactive_held_item())
 				playing = FALSE
@@ -161,7 +164,7 @@
 				playing = TRUE
 				soundloop.mid_sounds = list(curfile)
 				soundloop.cursound = null
-				soundloop.start()
+				soundloop.start(user) // why was the musical insturment set as a parent?
 				user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
 				GLOB.scarlet_round_stats[STATS_SONGS_PLAYED]++
 			else
@@ -311,7 +314,6 @@
 	"Bard Dance" = 'sound/music/instruments/viola (7).ogg', // BG3 Song
 	"Old Time Battles" = 'sound/music/instruments/viola (8).ogg') // BG3 Song
 
-
 /obj/item/rogue/instrument/vocals
 	name = "vocalist's talisman"
 	desc = "This talisman emanates a soft shimmer of light. When held, it can amplify and even change a bard's voice."
@@ -331,6 +333,12 @@
 	"Bard Dance (Whistling)" = 'sound/music/instruments/vocalsx (3).ogg',
 	"Old Time Battles (Whistling)" = 'sound/music/instruments/vocalsx (4).ogg')
 
+/obj/item/rogue/instrument/vocals/harpy_vocals
+	name = "harpy's song"
+	desc = "The blessed essence of harpysong. How did you get this... you monster!"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "harpysong"		//Pulsating heart energy thing.
+	not_held = TRUE
 
 /obj/item/rogue/instrument/trumpet
 	name = "trumpet"
