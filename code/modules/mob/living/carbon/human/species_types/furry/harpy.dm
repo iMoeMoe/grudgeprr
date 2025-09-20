@@ -12,7 +12,7 @@
 	Whilst harpies may fly, their freedom is weighed by corruption of fleshcrafting to this day. Complete open-air freedom is still foreign to them. \
 	Harpies tend to live and gather in colonies at the tops of great sequoia forests and in nearby cliffs. Due to their laden flight, they must employ use of updrafts and proximity to large objects or structures to bolster their limited range and air-dancing performances. \
 	Their serene songs and blissful music can be heard echoing far below, guiding travelers and thieves both to respite... or treasure. For as lifted into grace as they might be, these 'magpies' earn such a nickname from instinctual Matthiosan greed and love for anything that shines. \
-	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers. \"
+	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers."
 
 	skin_tone_wording = "Ancestry"
 	default_color = "FFFFFF"
@@ -46,7 +46,7 @@
 		)
 
 	race_bonus = list(STAT_CONSTITUTION = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1)
-	inherent_traits = list(TRAIT_ZJUMP, TRAIT_NOFALLDAMAGE2) // hahahahahh 
+	inherent_traits = list(TRAIT_ZJUMP, TRAIT_NOFALLDAMAGE2, TRAIT_CALTROPIMMUNE) // hahahahahh 
 
 	enflamed_icon = "widefire"
 	organs = list(

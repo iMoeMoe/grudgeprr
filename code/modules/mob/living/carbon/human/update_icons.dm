@@ -1341,10 +1341,11 @@ There are several things that need to be remembered:
 				client.screen += wear_pants					//add it to client's screen
 		update_observer_view(wear_pants,1)
 		if(dna && dna.species.sexes)
+			var/is_harpy = isharpy(src) // eh
 			var/racecustom
 			var/legsindex = get_limbloss_index(LEG_RIGHT, LEG_LEFT)
 			var/mutable_appearance/pants_overlay
-			if(dna.species.custom_clothes)
+			if((dna.species.custom_clothes) || (is_harpy)) // should prolly make it a separate limb or just use clipmask then
 				racecustom = dna.species.clothes_id
 			if(gender == FEMALE && !dna.species.use_m)
 				pants_overlay = wear_pants.build_worn_icon(default_layer = PANTS_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi', female = TRUE, customi = racecustom, sleeveindex = legsindex, boobed_overlay = has_boobed_overlay())
