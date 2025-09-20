@@ -1268,7 +1268,7 @@
 	if(!override && !is_flying())
 		float(!has_gravity)
 
-/mob/living/float(on)
+/mob/living/float(on) // bro why
 	if(throwing)
 		return
 	var/fixed = 0

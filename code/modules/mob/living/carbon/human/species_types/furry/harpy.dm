@@ -46,7 +46,7 @@
 		)
 
 	race_bonus = list(STAT_CONSTITUTION = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1)
-	inherent_traits = list(TRAIT_ZJUMP, TRAIT_NOFALLDAMAGE2, TRAIT_CALTROPIMMUNE) // hahahahahh 
+	inherent_traits = list(TRAIT_CALTROPIMMUNE) // hahahahahh 
 
 	enflamed_icon = "widefire"
 	organs = list(

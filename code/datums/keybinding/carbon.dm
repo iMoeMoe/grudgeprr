@@ -311,6 +311,48 @@
 	C.cycle_rmb_intent()
 	return TRUE
 
+/datum/keybinding/carbon/fly_up
+	hotkey_keys = list("Northeast")
+	name = "fly_up"
+	full_name = "Fly Up"
+	description = ""
+	category = CATEGORY_CARBON
+
+/datum/keybinding/carbon/fly_up/down(client/user)
+	if (!iscarbon(user.mob))
+		return FALSE
+	var/mob/living/carbon/human/C = user.mob
+	if(C.movement_type & FLYING)
+		var/turf/open/transparent/openspace/turf_above = get_step_multiz(C, UP)
+		if(C.zMove(UP, FALSE))
+			C.forceMove(turf_above)
+		else
+			to_chat(C, span_red("I can't fly up there!!"))
+	else
+		to_chat(C, span_red("I can't farking fly!!"))
+	return TRUE
+
+/datum/keybinding/carbon/fly_down
+	hotkey_keys = list("Southeast")
+	name = "fly_down"
+	full_name = "Fly Down"
+	description = ""
+	category = CATEGORY_CARBON
+
+/datum/keybinding/carbon/fly_down/down(client/user)
+	if (!iscarbon(user.mob))
+		return FALSE
+	var/mob/living/carbon/C = user.mob
+	if(C.movement_type & FLYING)
+		var/turf/open/transparent/openspace/turf_down = get_step_multiz(C, DOWN)
+		if(C.zMove(DOWN, FALSE))
+			C.forceMove(turf_down)
+		else
+			to_chat(C, span_red("I can't fly down there!!"))
+	else
+		to_chat(C, span_red("I can't farking fly!!"))
+	return TRUE
+
 // ** Action Buttons **
 // I stopped at 6 because it is probably the maximum number you can comfortably reach on keyboard
 /datum/keybinding/carbon/actions

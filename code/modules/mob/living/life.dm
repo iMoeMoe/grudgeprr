@@ -3,7 +3,7 @@
 	set invisibility = 0
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
+		float(on = TRUE) // why is this a thing?? why do we need to add FLOATING to FLYING mobs???
 
 	if (client)
 		var/turf/T = get_turf(src)
