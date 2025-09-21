@@ -368,11 +368,12 @@
 		)
 
 /datum/customizer/organ/tail/harpy
+	name = "Harpy Plumage"
 	customizer_choices = list(/datum/customizer_choice/organ/tail/harpy)
 	allows_disabling = FALSE
 
 /datum/customizer_choice/organ/tail/harpy
-	name = "Harpy Tail"
+	name = "Harpy Plumage"
 	organ_type = /obj/item/organ/tail
 	generic_random_pick = TRUE
 	sprite_accessories = list(

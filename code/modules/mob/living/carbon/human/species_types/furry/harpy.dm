@@ -87,6 +87,7 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/animal,
+		/datum/customizer/organ/snout/harpy,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,

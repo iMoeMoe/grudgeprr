@@ -335,6 +335,7 @@
 		)
 
 /datum/customizer/organ/ears/harpy
+	name = "Harpy Ears"
 	customizer_choices = list(/datum/customizer_choice/organ/ears/harpy)
 	allows_disabling = TRUE
 	default_disabled = TRUE

@@ -124,6 +124,7 @@
 	)
 
 /datum/customizer/organ/wings/harpy
+	name = "Harpy Wings"
 	customizer_choices = list(/datum/customizer_choice/organ/wings/harpy)
 	allows_disabling = FALSE
 
