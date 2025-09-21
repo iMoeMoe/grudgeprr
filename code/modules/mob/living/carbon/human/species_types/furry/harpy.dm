@@ -12,13 +12,16 @@
 	Whilst harpies may fly, their freedom is weighed by corruption of fleshcrafting to this day. Complete open-air freedom is still foreign to them. \
 	Harpies tend to live and gather in colonies at the tops of great sequoia forests and in nearby cliffs. Due to their laden flight, they must employ use of updrafts and proximity to large objects or structures to bolster their limited range and air-dancing performances. \
 	Their serene songs and blissful music can be heard echoing far below, guiding travelers and thieves both to respite... or treasure. For as lifted into grace as they might be, these 'magpies' earn such a nickname from instinctual Matthiosan greed and love for anything that shines. \
-	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers."
+	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers. </br> \
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-3 CON | -2 STR</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 PER | +1 INT | +2 SPD</b></span> </br> \
+	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Flight | Innate Singing</b></span> </br> \
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear shoes</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>Slight Fall Damage Reduction </span></b>"
 
 	skin_tone_wording = "Ancestry"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,MUTCOLORS_PARTSONLY)
+	species_traits = list(EYECOLOR, LIPS, HAIR, HARPY, OLDGREY, MUTCOLORS)
 	default_features = MANDATORY_FEATURE_LIST
-	use_skintones = TRUE
+
 	possible_ages = ALL_AGES_LIST
 	disliked_food = NONE
 	liked_food = NONE
@@ -46,7 +49,10 @@
 		)
 
 	race_bonus = list(STAT_CONSTITUTION = -3, STAT_STRENGTH = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_SPEED = 2)
-	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1, TRAIT_DODGEEXPERT) // hahahahahh 
+	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1) // hahahahahh 
+	inherent_skills = list(
+		/datum/skill/misc/music = 3,
+	)
 
 	enflamed_icon = "widefire"
 	organs = list(

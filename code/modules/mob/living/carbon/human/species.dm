@@ -83,6 +83,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/species_traits = list()
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
+	/// Associative list of skills to adjustments
+	var/list/inherent_skills = list()
+
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
 	var/list/inherent_factions
@@ -449,6 +452,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
 
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, inherent_skills[skill], TRUE)
+
 	if(TRAIT_TOXIMMUNE in inherent_traits)
 		C.setToxLoss(0, TRUE, TRUE)
 
@@ -497,6 +503,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, -inherent_skills[skill], TRUE)
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)

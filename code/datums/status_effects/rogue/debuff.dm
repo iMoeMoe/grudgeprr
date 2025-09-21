@@ -559,7 +559,7 @@
 //	to_chat(world, "[harpy.movement_type] before application")
 	harpy.movement_type = FLYING
 //	to_chat(world, "[harpy.movement_type] after application")
-	harpy.dna.species.speedmod += 0.5
+	harpy.dna.species.speedmod += 0.3
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 
@@ -586,7 +586,7 @@
 	var/mob/living/carbon/human/harpy = owner
 	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 	harpy.remove_status_effect(/datum/status_effect/debuff/flight_displacement)
-	harpy.dna.species.speedmod -= 0.5
+	harpy.dna.species.speedmod -= 0.3
 	harpy.remove_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE)
 	var/turf/tile_under_harpy = harpy.loc
 //	to_chat(world, "[harpy.movement_type] before removal")

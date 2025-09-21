@@ -38,15 +38,9 @@
 
 /obj/item/organ/vocal_cords/harpy/Insert(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	if(M.mind)
-		M.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/retreat)
 
 /obj/item/organ/vocal_cords/harpy/Remove(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-//	to_chat(world, "removed cords")
-	if(M.mind)
-//		to_chat(world, "should remove spell")
-		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/order/retreat)
 
 /obj/item/organ/vocal_cords/harpy/ui_action_click(owner)
 	name = "Harpy's song"
