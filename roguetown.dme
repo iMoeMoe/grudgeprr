@@ -1339,6 +1339,7 @@
 #include "code\modules\clothing\rogueclothes\robes.dm"
 #include "code\modules\clothing\rogueclothes\shirts.dm"
 #include "code\modules\clothing\rogueclothes\storage.dm"
+#include "code\modules\clothing\rogueclothes\dummy_items.dm"
 #include "code\modules\clothing\rogueclothes\wrists.dm"
 #include "code\modules\clothing\rogueclothes\npc\goblin.dm"
 #include "code\modules\clothing\shoes\_shoes.dm"

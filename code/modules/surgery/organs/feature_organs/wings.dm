@@ -52,7 +52,9 @@
 
 /obj/item/organ/wings/harpy/Insert(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+//	to_chat(world, "added wings")
 	if(M.mind)
+//		to_chat(world, "should add spell")
 		M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/harpy_flight)
 
 /obj/item/organ/wings/harpy/Remove(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
@@ -63,41 +65,31 @@
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/harpy_flight)
 
 /obj/effect/proc_holder/spell/self/harpy_flight
-	name = "Flight"
+	name = "Harpy Flight"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
 	overlay_state = "zad"
 	movement_interrupt = FALSE
-	sound = 'sound/misc/astratascream.ogg'
 	associated_skill = null
 	antimagic_allowed = TRUE
 	recharge_time = 1
 	miracle = FALSE
+	var/list/swoop_sound = list(
+		'sound/foley/footsteps/flight_sounds/swooping1.ogg',
+		'sound/foley/footsteps/flight_sounds/swooping2.ogg',
+		'sound/foley/footsteps/flight_sounds/swooping3.ogg'
+	)
 
 /obj/effect/proc_holder/spell/self/harpy_flight/cast(mob/living/carbon/human/user)
 	if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
-		user.visible_message(
-			span_bloody("[user] takes to the skies!!"),
-			span_bloody("I take to the skies!"))
-		user.say("Aha!")
 		user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
-//		animate(user, pixel_y = user.pixel_y + 2, time = 10, loop = -1)
-//		sleep(10)
-//		animate(user, pixel_y = user.pixel_y - 2, time = 10, loop = -1)
+		playsound(user, pick(swoop_sound), 100)
+		user.emote("wingsfly", forced = TRUE)
+		if(prob(1)) // somebody, call saint jiub!!
+			playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
 	else
-		to_chat(user, "Wah, back on the ground!") // sad emoji
+		to_chat(user, span_bloody("Wah, back on the ground! How... quaint!!")) // sad emoji
 		user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
-/*
-//TODO: Better floating
-/atom/movable/proc/float(on)
-	if(throwing)
-		return
-	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = pixel_y + 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
-		animate(pixel_y = pixel_y - 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
-		setMovetype(movement_type | FLOATING)
-	else if (!on && (movement_type & FLOATING))
-		animate(src, pixel_y = initial(pixel_y), time = 1 SECONDS)
-		setMovetype(movement_type & ~FLOATING)
-*/
+		playsound(user, pick(swoop_sound), 100)
+		user.emote("wingsfly", forced = TRUE)

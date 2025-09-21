@@ -540,53 +540,99 @@
 	desc = ""
 	icon_state = "muscles"
 
+/////////////////////////
+///HARPY FLIGHT STUFF///
+///////////////////////
 
-
-///
 /datum/status_effect/debuff/harpy_flight
 	id = "harpy_flight"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/harpy_flight
 	tick_interval = 10
+	var/baseline_stamina_cost = 7
 
 /datum/status_effect/debuff/harpy_flight/on_apply()
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
-	harpy.put_in_hands(new /obj/item/clothing/wall_grab, TRUE, FALSE, TRUE)
-	harpy.put_in_hands(new /obj/item/clothing/wall_grab, TRUE, FALSE, TRUE)
-	to_chat(world, "[harpy.movement_type] before application")
+	harpy.apply_status_effect(/datum/status_effect/debuff/flight_displacement)
+	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
+	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
+//	to_chat(world, "[harpy.movement_type] before application")
 	harpy.movement_type = FLYING
-	to_chat(world, "[harpy.movement_type] after application")
+//	to_chat(world, "[harpy.movement_type] after application")
+	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
+
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
-	var/baseline_stamina_cost = 8
 	var/athletics_skill = max(harpy.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
 	var/stamina_cost_final = round((baseline_stamina_cost - athletics_skill), 1)
-//	to_chat(harpy, span_warningbig("[stamina_cost_final] REMOVED!")) // debug msg
 	harpy.stamina_add(stamina_cost_final)
-	to_chat(world, "[harpy.movement_type] tick")
-	var/turf/tile_under_harpy = harpy.loc
+//	to_chat(harpy, span_warningbig("[stamina_cost_final] REMOVED!")) // debug msg
+//	to_chat(world, "[harpy.movement_type] tick")
 	if(harpy.stamina >= harpy.max_stamina)
 		to_chat(harpy, span_bloody("I can't flap my wings for much more! AGHH!!"))
 		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
-		tile_under_harpy.zFall(harpy)
-
 
 /datum/status_effect/debuff/harpy_flight/on_remove()
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
+	harpy.remove_status_effect(/datum/status_effect/debuff/flight_displacement)
 	var/turf/tile_under_harpy = harpy.loc
-	to_chat(world, "[harpy.movement_type] before removal")
+//	to_chat(world, "[harpy.movement_type] before removal")
 	harpy.movement_type = GROUND
-	to_chat(world, "[harpy.movement_type] after removal")
+//	to_chat(world, "[harpy.movement_type] after removal")
 	tile_under_harpy.zFall(harpy)
-	if(harpy.is_holding_item_of_type(/obj/item/clothing/wall_grab))
-		for(var/obj/item/clothing/wall_grab/I in harpy.held_items)
-			if(istype(I, /obj/item/clothing/wall_grab))
+	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
+	if(harpy.is_holding_item_of_type(/obj/item/clothing/active_wing))
+		for(var/obj/item/clothing/active_wing/I in harpy.held_items)
+			if(istype(I, /obj/item/clothing/active_wing))
 				qdel(I)
 
 /atom/movable/screen/alert/status_effect/debuff/harpy_flight
 	name = "Flying..."
 	desc = "Tehee!!"
 	icon_state = "muscles"
+
+////////////////////////////////////////////////////////////////////////////////
+///STATUS EFFECT WE USE TO ANIMATE US GOING UP AND DOWN AS IF WE WERE FLYING///
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/status_effect/debuff/flight_displacement
+	id = "flight_displacement"
+	tick_interval = 5
+
+/datum/status_effect/debuff/flight_displacement/tick()
+	. = ..()
+	var/mob/living/carbon/human/harpy = owner
+//	to_chat(world, "displacement is ticking")
+	if(harpy.gyrating_wobblebeast)
+		animate(harpy, pixel_y = harpy.pixel_y + 3, time = 5, loop = 1)
+//		to_chat(world, "gyrating is TRUE")
+		harpy.gyrating_wobblebeast = FALSE
+	else
+		animate(harpy, pixel_y = harpy.pixel_y - 3, time = 5, loop = 1)
+//		to_chat(world, "gyrating is FALSE")
+		harpy.gyrating_wobblebeast = TRUE
+
+//////////////////////////////////////
+///FLIGHT SOUND LOOP STATUS EFFECT///
+////////////////////////////////////
+
+///I MEAN it's the easiest fucking way to do so in my mind LOL
+/datum/status_effect/debuff/flight_sound_loop
+	id = "flight_sound_loop"
+	tick_interval = 15
+	var/list/wing_flap_sound = list(
+		'sound/foley/footsteps/flight_sounds/wingflap1.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap2.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap3.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap4.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap5.ogg',
+		'sound/foley/footsteps/flight_sounds/wingflap6.ogg',
+	)
+
+/datum/status_effect/debuff/flight_sound_loop/tick()
+	. = ..()
+	var/mob/living/carbon/human/harpy = owner
+	playsound(harpy, pick(wing_flap_sound), 100)

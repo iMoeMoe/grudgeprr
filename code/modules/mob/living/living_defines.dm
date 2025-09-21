@@ -31,6 +31,9 @@
 	var/wallpressed = FALSE
 	var/climbing = FALSE
 
+	/// used for displacement animation thing
+	var/gyrating_wobblebeast = FALSE 
+
 	var/pixelshift_layer = 0
 
 	var/lying = 0			//number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
