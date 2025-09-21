@@ -114,7 +114,7 @@
 	/datum/language/thievescant,
 	)
 
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER, TRAIT_KEENEARS)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_PER = 2,
