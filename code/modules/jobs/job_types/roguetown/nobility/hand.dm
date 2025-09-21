@@ -92,7 +92,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/tracking = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
 	)
 
 //Classical hand start - same as before, nothing changed.
