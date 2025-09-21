@@ -45,8 +45,8 @@
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
 		)
 
-	race_bonus = list(STAT_CONSTITUTION = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1)
-	inherent_traits = list(TRAIT_CALTROPIMMUNE) // hahahahahh 
+	race_bonus = list(STAT_CONSTITUTION = -3, STAT_STRENGTH = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_SPEED = 2)
+	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1, TRAIT_DODGEEXPERT) // hahahahahh 
 
 	enflamed_icon = "widefire"
 	organs = list(

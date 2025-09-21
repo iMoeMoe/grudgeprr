@@ -559,6 +559,8 @@
 //	to_chat(world, "[harpy.movement_type] before application")
 	harpy.movement_type = FLYING
 //	to_chat(world, "[harpy.movement_type] after application")
+	harpy.dna.species.speedmod += 0.5
+	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 
 
@@ -570,20 +572,27 @@
 	harpy.stamina_add(stamina_cost_final)
 //	to_chat(harpy, span_warningbig("[stamina_cost_final] REMOVED!")) // debug msg
 //	to_chat(world, "[harpy.movement_type] tick")
+	if(harpy.mind)
+		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT/10), FALSE)
 	if(harpy.stamina >= harpy.max_stamina)
 		to_chat(harpy, span_bloody("I can't flap my wings for much more! AGHH!!"))
+		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+	if(!(harpy.mobility_flags & MOBILITY_STAND))
+		to_chat(harpy, span_bloody("I can't flap my wings while imbalanced like this! AGHH!!"))
 		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 
 /datum/status_effect/debuff/harpy_flight/on_remove()
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
+	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 	harpy.remove_status_effect(/datum/status_effect/debuff/flight_displacement)
+	harpy.dna.species.speedmod -= 0.5
+	harpy.remove_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE)
 	var/turf/tile_under_harpy = harpy.loc
 //	to_chat(world, "[harpy.movement_type] before removal")
 	harpy.movement_type = GROUND
 //	to_chat(world, "[harpy.movement_type] after removal")
 	tile_under_harpy.zFall(harpy)
-	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 	if(harpy.is_holding_item_of_type(/obj/item/clothing/active_wing))
 		for(var/obj/item/clothing/active_wing/I in harpy.held_items)
 			if(istype(I, /obj/item/clothing/active_wing))
@@ -622,7 +631,7 @@
 ///I MEAN it's the easiest fucking way to do so in my mind LOL
 /datum/status_effect/debuff/flight_sound_loop
 	id = "flight_sound_loop"
-	tick_interval = 15
+	tick_interval = 16
 	var/list/wing_flap_sound = list(
 		'sound/foley/footsteps/flight_sounds/wingflap1.ogg',
 		'sound/foley/footsteps/flight_sounds/wingflap2.ogg',

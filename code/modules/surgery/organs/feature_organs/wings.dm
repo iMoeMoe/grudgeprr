@@ -54,8 +54,11 @@
 	. = ..()
 //	to_chat(world, "added wings")
 	if(M.mind)
-//		to_chat(world, "should add spell")
-		M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/harpy_flight)
+		if(isharpy(M))
+//			to_chat(world, "should add spell")
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/harpy_flight)
+		else
+			to_chat(M, span_bloody("I have the wings, yes... BUT HOW THE FARK DO I USE THEM?!!"))
 
 /obj/item/organ/wings/harpy/Remove(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
@@ -82,14 +85,22 @@
 	)
 
 /obj/effect/proc_holder/spell/self/harpy_flight/cast(mob/living/carbon/human/user)
-	if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
-		user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
-		playsound(user, pick(swoop_sound), 100)
-		user.emote("wingsfly", forced = TRUE)
-		if(prob(1)) // somebody, call saint jiub!!
-			playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
+	var/harpy_AC = user.highest_ac_worn()
+	if(harpy_AC <= ARMOR_CLASS_LIGHT)
+		if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
+			if(user.mobility_flags & MOBILITY_STAND)
+				if(do_after(user, 5))
+					user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
+					playsound(user, pick(swoop_sound), 100)
+					user.emote("wingsfly", forced = TRUE)
+					if(prob(1)) // somebody, call saint jiub!!
+						playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
+			else
+				to_chat(user, span_bloody("I can't fly while imbalanced like this! AGHH!!"))
+		else
+			to_chat(user, span_bloody("Wah, back on the ground! How... quaint!!")) // sad emoji
+			user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+			playsound(user, pick(swoop_sound), 100)
+			user.emote("wingsfly", forced = TRUE)
 	else
-		to_chat(user, span_bloody("Wah, back on the ground! How... quaint!!")) // sad emoji
-		user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
-		playsound(user, pick(swoop_sound), 100)
-		user.emote("wingsfly", forced = TRUE)
+		to_chat(user, span_bloody("THE ARMOR WEIGHS ME DOWN!!")) // LIGHT ON YO FEET SOULJA

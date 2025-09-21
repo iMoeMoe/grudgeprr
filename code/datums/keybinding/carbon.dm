@@ -324,8 +324,9 @@
 	var/mob/living/carbon/human/C = user.mob
 	if(C.movement_type & FLYING)
 		var/turf/open/transparent/openspace/turf_above = get_step_multiz(C, UP)
-		if(C.zMove(UP, FALSE))
-			C.forceMove(turf_above)
+		if(C.canZMove(UP, turf_above))
+			if(do_after(C, 3))
+				C.forceMove(turf_above)
 		else
 			to_chat(C, span_red("I can't fly up there!!"))
 	else
@@ -345,8 +346,9 @@
 	var/mob/living/carbon/C = user.mob
 	if(C.movement_type & FLYING)
 		var/turf/open/transparent/openspace/turf_down = get_step_multiz(C, DOWN)
-		if(C.zMove(DOWN, FALSE))
-			C.forceMove(turf_down)
+		if(C.canZMove(DOWN, turf_down))
+			if(do_after(C, 3))
+				C.forceMove(turf_down)
 		else
 			to_chat(C, span_red("I can't fly down there!!"))
 	else
