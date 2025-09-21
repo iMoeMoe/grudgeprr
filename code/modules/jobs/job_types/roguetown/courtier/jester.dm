@@ -46,14 +46,14 @@
 		var/rngseed = text2num(H.client.computer_id) % 0x3fff
 		if(GLOB.round_id)
 			rngseed += text2num(GLOB.round_id)
-		rand_seed(rngseed&29051994)
+		rand_seed(rngseed&29051994) // this whole chunk of code prevents far travelling and returning to reroll stats
 	H.STASTR = rand(1, 21)
 	H.STAEND = rand(1, 21)
 	H.STACON = rand(1, 21)
 	H.STAINT = rand(1, 21)
 	H.STAPER = rand(1, 21)
 	H.STALUC = rand(1, 21)
-	rand_seed(29051994)
+	rand_seed(29051994) // reset the seed
 	H.cmode_music = 'sound/music/combat_jester.ogg'
 	if(H.mind)
 		// Mime vs Jester. 
