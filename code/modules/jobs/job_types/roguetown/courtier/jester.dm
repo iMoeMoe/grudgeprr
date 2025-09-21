@@ -42,12 +42,18 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, rand(1,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, rand(1,4), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, rand(1,3), TRUE)
+	if(H.client)
+		var/rngseed = text2num(H.client.computer_id) % 0x3fff
+		if(GLOB.round_id)
+			rngseed += text2num(GLOB.round_id)
+		rand_seed(rngseed&29051994)
 	H.STASTR = rand(1, 21)
 	H.STAEND = rand(1, 21)
 	H.STACON = rand(1, 21)
 	H.STAINT = rand(1, 21)
 	H.STAPER = rand(1, 21)
 	H.STALUC = rand(1, 21)
+	rand_seed(29051994)
 	H.cmode_music = 'sound/music/combat_jester.ogg'
 	if(H.mind)
 		// Mime vs Jester. 
