@@ -27,8 +27,8 @@
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/harpy_f.dmi'
 	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
 	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
-	soundpack_m = /datum/voicepack/male
-	soundpack_f = /datum/voicepack/female
+	soundpack_m = /datum/voicepack/male/elf
+	soundpack_f = /datum/voicepack/female/elf
 	stress_examine = TRUE
 	stress_desc = span_red("Farking birdbrains...")
 
