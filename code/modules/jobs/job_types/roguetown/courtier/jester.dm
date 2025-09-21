@@ -38,7 +38,7 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, rand(2,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, rand(4,6), TRUE) //a showman like no other. you need to be fit to perform.
 	H.adjust_skillrank(/datum/skill/misc/music, rand(1,6), TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, pick(1,2,3,4,5), TRUE) // is this a good idea? Probably not, but the idea of a master fighter jester with 20 str is too good to pass on, this can only go well
+	H.adjust_skillrank(/datum/skill/combat/unarmed, rand(1,5), TRUE) // is this a good idea? Probably not, but the idea of a master fighter jester with 20 str is too good to pass on, this can only go well
 	H.adjust_skillrank(/datum/skill/combat/wrestling, rand(1,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, rand(1,4), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, rand(1,3), TRUE)
