@@ -548,7 +548,8 @@
 	id = "harpy_flight"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/harpy_flight
 	tick_interval = 10
-	var/baseline_stamina_cost = 7
+	var/baseline_stamina_cost = 8
+	var/obj/effect/flyer_shadow/shadow
 
 /datum/status_effect/debuff/harpy_flight/on_apply()
 	. = ..()
@@ -556,13 +557,11 @@
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_displacement)
 	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
 	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
-//	to_chat(world, "[harpy.movement_type] before application")
 	harpy.movement_type = FLYING
-//	to_chat(world, "[harpy.movement_type] after application")
 	harpy.dna.species.speedmod += 0.3
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
-
+	init_signals()
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
@@ -571,14 +570,14 @@
 	var/stamina_cost_final = round((baseline_stamina_cost - athletics_skill), 1)
 	harpy.stamina_add(stamina_cost_final)
 //	to_chat(harpy, span_warningbig("[stamina_cost_final] REMOVED!")) // debug msg
-//	to_chat(world, "[harpy.movement_type] tick")
+	check_movement()
 	if(harpy.mind)
-		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT/10), FALSE)
-	if(harpy.stamina >= harpy.max_stamina)
-		to_chat(harpy, span_bloody("I can't flap my wings for much more! AGHH!!"))
-		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT/8), FALSE)
 	if(!(harpy.mobility_flags & MOBILITY_STAND))
 		to_chat(harpy, span_bloody("I can't flap my wings while imbalanced like this! AGHH!!"))
+		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+	if(harpy.stamina >= harpy.max_stamina)
+		to_chat(harpy, span_bloody("I can't flap my wings for much more! AGHH!!"))
 		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 
 /datum/status_effect/debuff/harpy_flight/on_remove()
@@ -589,10 +588,9 @@
 	harpy.dna.species.speedmod -= 0.3
 	harpy.remove_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE)
 	var/turf/tile_under_harpy = harpy.loc
-//	to_chat(world, "[harpy.movement_type] before removal")
 	harpy.movement_type = GROUND
-//	to_chat(world, "[harpy.movement_type] after removal")
 	tile_under_harpy.zFall(harpy)
+	remove_signals()
 	if(harpy.is_holding_item_of_type(/obj/item/clothing/active_wing))
 		for(var/obj/item/clothing/active_wing/I in harpy.held_items)
 			if(istype(I, /obj/item/clothing/active_wing))
@@ -603,25 +601,89 @@
 	desc = "Tehee!!"
 	icon_state = "muscles"
 
-////////////////////////////////////////////////////////////////////////////////
-///STATUS EFFECT WE USE TO ANIMATE US GOING UP AND DOWN AS IF WE WERE FLYING///
-//////////////////////////////////////////////////////////////////////////////
+/obj/effect/flyer_shadow
+	name = "humanoid shadow"
+	desc = "A shadow cast from something flying above."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shadow"
+	anchored = TRUE
+	layer = BELOW_MOB_LAYER
+	alpha = 180
+	var/datum/weakref/flying_ref
+
+/obj/effect/flyer_shadow/Initialize(mapload, flying_mob)
+	. = ..()
+	if(flying_mob)
+		flying_ref = WEAKREF(flying_mob)
+	transform = matrix() * 0.8 // Make the shadow slightly smaller
+	add_filter("shadow_blur", 1, gauss_blur_filter(1))
+
+/obj/effect/flyer_shadow/Destroy()
+	flying_ref = null
+	return ..()
+
+/datum/status_effect/debuff/harpy_flight/proc/init_signals()
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
+//	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMGE, PROC_REF(check_damage))
+
+/datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source)
+	SIGNAL_HANDLER
+
+	if(shadow)
+		if(!istransparentturf(get_turf(owner)))
+			shadow.alpha = 0
+		else
+			shadow.alpha = 130
+
+		var/turf/below_turf = GET_TURF_BELOW(get_turf(owner))
+		if(below_turf)
+			shadow.forceMove(below_turf)
+
+	else
+		var/turf/below_turf = GET_TURF_BELOW(get_turf(owner))
+		if(below_turf && istransparentturf(get_turf(owner)))
+			shadow = new /obj/effect/flyer_shadow(below_turf, owner)
+/*
+/datum/status_effect/debuff/harpy_flight/proc/check_damage(datum/source, damage, damagetype, def_zone)
+	SIGNAL_HANDLER
+
+	if(damagetype != BRUTE || damagetype != BURN)
+		return
+
+	if(prob(damage / 4))
+		to_chat(owner, span_warning("The damage knocks you out of the air!"))
+		fall()
+		if(isliving(owner))
+			var/mob/living/flier = owner
+			flier.Knockdown(2 SECONDS)
+*/
+/datum/status_effect/debuff/harpy_flight/proc/remove_signals()
+
+	UnregisterSignal(owner, list(
+//		COMSIG_MOB_APPLY_DAMGE,
+		COMSIG_MOVABLE_MOVED,
+	))
+
+	if(shadow)
+		QDEL_NULL(shadow)
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///STATUS EFFECT WE USE TO ANIMATE US GOING UP AND DOWN AS IF WE WERE FLAPPING WINGS LIKE??///
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/status_effect/debuff/flight_displacement
 	id = "flight_displacement"
 	tick_interval = 5
+	alert_type = null
 
 /datum/status_effect/debuff/flight_displacement/tick()
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
-//	to_chat(world, "displacement is ticking")
 	if(harpy.gyrating_wobblebeast)
 		animate(harpy, pixel_y = harpy.pixel_y + 3, time = 5, loop = 1)
-//		to_chat(world, "gyrating is TRUE")
 		harpy.gyrating_wobblebeast = FALSE
 	else
 		animate(harpy, pixel_y = harpy.pixel_y - 3, time = 5, loop = 1)
-//		to_chat(world, "gyrating is FALSE")
 		harpy.gyrating_wobblebeast = TRUE
 
 //////////////////////////////////////
@@ -632,6 +694,7 @@
 /datum/status_effect/debuff/flight_sound_loop
 	id = "flight_sound_loop"
 	tick_interval = 16
+	alert_type = null
 	var/list/wing_flap_sound = list(
 		'sound/foley/footsteps/flight_sounds/wingflap1.ogg',
 		'sound/foley/footsteps/flight_sounds/wingflap2.ogg',
@@ -645,3 +708,7 @@
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
 	playsound(harpy, pick(wing_flap_sound), 100)
+
+/////////////////////////////
+///HARPY FLIGHT STUFF END///
+///////////////////////////
