@@ -89,12 +89,15 @@
 	if(harpy_AC <= ARMOR_CLASS_LIGHT)
 		if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
 			if(user.mobility_flags & MOBILITY_STAND)
-				if(do_after(user, 5))
-					user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
-					playsound(user, pick(swoop_sound), 100)
-					user.emote("wingsfly", forced = TRUE)
-					if(prob(1)) // somebody, call saint jiub!!
-						playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
+				if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA) && (user.mob_biotypes & MOB_UNDEAD))
+					to_chat(user, span_bloody("I can't fly like this! I have no feathers left!! AGHH!! WHAT HAVE I DONE?!!"))
+				else
+					if(do_after(user, 5))
+						user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
+						playsound(user, pick(swoop_sound), 100)
+						user.emote("wingsfly", forced = TRUE)
+						if(prob(1)) // somebody, call saint jiub!!
+							playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
 			else
 				to_chat(user, span_bloody("I can't fly while imbalanced like this! AGHH!!"))
 		else
