@@ -554,7 +554,9 @@
 /datum/status_effect/debuff/harpy_flight/on_apply()
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
-	harpy.apply_status_effect(/datum/status_effect/debuff/flight_displacement)
+	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
+	harpy.drop_all_held_items()
 	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
 	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
 	harpy.movement_type = FLYING
@@ -583,8 +585,8 @@
 /datum/status_effect/debuff/harpy_flight/on_remove()
 	. = ..()
 	var/mob/living/carbon/human/harpy = owner
+	animate(harpy)
 	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
-	harpy.remove_status_effect(/datum/status_effect/debuff/flight_displacement)
 	harpy.dna.species.speedmod -= 0.3
 	harpy.remove_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE)
 	var/turf/tile_under_harpy = harpy.loc
@@ -609,6 +611,7 @@
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	alpha = 130
+	pixel_y = -5
 	var/datum/weakref/flying_ref
 
 /obj/effect/flyer_shadow/proc/canZMove(dir, turf/target)
@@ -677,25 +680,6 @@
 
 	if(shadow)
 		QDEL_NULL(shadow)
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///STATUS EFFECT WE USE TO ANIMATE US GOING UP AND DOWN AS IF WE WERE FLAPPING WINGS LIKE??///
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-/datum/status_effect/debuff/flight_displacement
-	id = "flight_displacement"
-	tick_interval = 5
-	alert_type = null
-
-/datum/status_effect/debuff/flight_displacement/tick()
-	. = ..()
-	var/mob/living/carbon/human/harpy = owner
-	if(harpy.gyrating_wobblebeast)
-		animate(harpy, pixel_y = harpy.pixel_y + 3, time = 5, loop = 1)
-		harpy.gyrating_wobblebeast = FALSE
-	else
-		animate(harpy, pixel_y = harpy.pixel_y - 3, time = 5, loop = 1)
-		harpy.gyrating_wobblebeast = TRUE
 
 //////////////////////////////////////
 ///FLIGHT SOUND LOOP STATUS EFFECT///
