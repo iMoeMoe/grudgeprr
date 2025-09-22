@@ -265,7 +265,7 @@
 /datum/virtue/utility/swiftfingers
 	name = "Swift Fingers"
 	desc = "You have a natural talent for weaving your hands into the pockets of others unnoticed, or weightlessly untying a belt. You know how to take away goods from their owners far easier than most travelers."
-	added_skills = list(list(/datum/skill/misc/stealing, 2, 3))
+	added_skills = list(list(/datum/skill/misc/stealing, 3, 4))
 
 /datum/virtue/utility/granary
 	name = "Cunning Provisioner"
