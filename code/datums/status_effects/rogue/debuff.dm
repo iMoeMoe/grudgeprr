@@ -608,8 +608,11 @@
 	icon_state = "shadow"
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	alpha = 180
+	alpha = 130
 	var/datum/weakref/flying_ref
+
+/obj/effect/flyer_shadow/proc/canZMove(dir, turf/target)
+	return can_zTravel(target, dir) && (movement_type & FLYING)
 
 /obj/effect/flyer_shadow/Initialize(mapload, flying_mob)
 	. = ..()
@@ -630,19 +633,27 @@
 	SIGNAL_HANDLER
 
 	if(shadow)
-		if(!istransparentturf(get_turf(owner)))
-			shadow.alpha = 0
-		else
-			shadow.alpha = 130
 
-		var/turf/below_turf = GET_TURF_BELOW(get_turf(owner))
-		if(below_turf)
-			shadow.forceMove(below_turf)
+		var/turf/og_turf = get_turf(owner)
+		var/turf/turf1 = GET_TURF_BELOW(get_turf(owner))
+		var/turf/turf2 = GET_TURF_BELOW(get_turf(turf1))
+		var/turf/turf3 = GET_TURF_BELOW(get_turf(turf2))
+		var/turf/turf4 = GET_TURF_BELOW(get_turf(turf3))
+
+		if(og_turf) // hey as long as it works smile emoji
+			shadow.forceMove(og_turf)
+			if(isopenspace(og_turf) && (turf1))
+				shadow.forceMove(turf1)
+				if(isopenspace(turf1) && (turf2))
+					shadow.forceMove(turf2)
+					if(isopenspace(turf2) && (turf3))
+						shadow.forceMove(turf3)
+						if(isopenspace(turf3) && (turf4))
+							shadow.forceMove(turf4)
 
 	else
-		var/turf/below_turf = GET_TURF_BELOW(get_turf(owner))
-		if(below_turf && istransparentturf(get_turf(owner)))
-			shadow = new /obj/effect/flyer_shadow(below_turf, owner)
+		var/turf/og_turf = get_turf(owner)
+		shadow = new /obj/effect/flyer_shadow(og_turf, owner)
 /*
 /datum/status_effect/debuff/harpy_flight/proc/check_damage(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
