@@ -707,6 +707,7 @@
 #include "code\datums\sexcon\sex_actions\deviant\facesitting.dm"
 #include "code\datums\sexcon\sex_actions\deviant\footjob.dm"
 #include "code\datums\sexcon\sex_actions\deviant\force_thighjob.dm"
+#include "code\datums\sexcon\sex_actions\deviant\force_titjob.dm"
 #include "code\datums\sexcon\sex_actions\deviant\frotting.dm"
 #include "code\datums\sexcon\sex_actions\deviant\rub_body.dm"
 #include "code\datums\sexcon\sex_actions\deviant\scissoring.dm"
