@@ -186,4 +186,3 @@
 /obj/item/organ/ears/harpy
 	name = "harpy ears"
 	desc = "You are a monster."
-	accessory_type = /datum/sprite_accessory/ears/bat
