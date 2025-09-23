@@ -89,8 +89,8 @@
 	if(harpy_AC <= ARMOR_CLASS_LIGHT)
 		if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
 			if(user.mobility_flags & MOBILITY_STAND)
-				if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA) && (user.mob_biotypes & MOB_UNDEAD))
-					to_chat(user, span_bloody("I can't fly like this! I have no feathers left!! AGHH!! WHAT HAVE I DONE?!!"))
+				if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA) && (user.mob_biotypes & MOB_UNDEAD) || HAS_TRAIT(user, TRAIT_INFINITE_STAMINA))
+					to_chat(user, span_bloody("I can't fly like this! I have no feathers left!! </br>AGHH!! WHAT HAVE I DONE?!!"))
 				else
 					if(do_after(user, 5))
 						user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
