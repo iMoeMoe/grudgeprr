@@ -90,7 +90,8 @@
 		if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
 			if(user.mobility_flags & MOBILITY_STAND)
 				if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA))
-					to_chat(user, span_bloody("I can't fly like this! I have no feathers left!! </br>AGHH!! WHAT HAVE I DONE?!!"))
+					to_chat(user, span_bloody("I am too energetic to control my flight!</br>AGHH!!"))
+					user.Knockdown(10)
 				else
 					if(do_after(user, 5))
 						user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)

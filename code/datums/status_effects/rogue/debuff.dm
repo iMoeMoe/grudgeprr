@@ -574,7 +574,7 @@
 //	to_chat(harpy, span_warningbig("[stamina_cost_final] REMOVED!")) // debug msg
 	check_movement()
 	if(harpy.mind)
-		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT/8), FALSE)
+		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT*0.03), FALSE)
 	if(!(harpy.mobility_flags & MOBILITY_STAND))
 		to_chat(harpy, span_bloody("I can't flap my wings while imbalanced like this! AGHH!!"))
 		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
