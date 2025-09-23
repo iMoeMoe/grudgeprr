@@ -325,7 +325,7 @@
 	if(C.movement_type & FLYING)
 		var/turf/open/transparent/openspace/turf_above = get_step_multiz(C, UP)
 		if(C.canZMove(UP, turf_above))
-			if(do_after(C, 2))
+			if(do_after(C, 3))
 				C.forceMove(turf_above)
 		else
 			to_chat(C, span_red("I can't fly up there!!"))
@@ -347,7 +347,7 @@
 	if(C.movement_type & FLYING)
 		var/turf/open/transparent/openspace/turf_down = get_step_multiz(C, DOWN)
 		if(C.canZMove(DOWN, turf_down))
-			if(do_after(C, 2))
+			if(do_after(C, 3))
 				C.forceMove(turf_down)
 		else
 			to_chat(C, span_red("I can't fly down there!!"))

@@ -86,14 +86,14 @@
 
 /obj/effect/proc_holder/spell/self/harpy_flight/cast(mob/living/carbon/human/user)
 	var/harpy_AC = user.highest_ac_worn()
-	if(harpy_AC <= ARMOR_CLASS_LIGHT)
+	if(harpy_AC == ARMOR_CLASS_NONE)
 		if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
 			if(user.mobility_flags & MOBILITY_STAND)
 				if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA))
 					to_chat(user, span_bloody("I am too energetic to control my flight!</br>AGHH!!"))
 					user.Knockdown(10)
 				else
-					if(do_after(user, 5))
+					if(do_after(user, 10))
 						user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
 						playsound(user, pick(swoop_sound), 100)
 						user.emote("wingsfly", forced = TRUE)
