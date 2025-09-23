@@ -82,4 +82,3 @@
 /obj/item/organ/tail/harpy
 	name = "harpy plumage"
 	desc = "Why?"
-	accessory_type = /datum/sprite_accessory/tail/hawk

@@ -374,9 +374,14 @@
 
 /datum/customizer_choice/organ/tail/harpy
 	name = "Harpy Plumage"
-	organ_type = /obj/item/organ/tail
+	organ_type = /obj/item/organ/tail/harpy
 	generic_random_pick = TRUE
 	sprite_accessories = list(
 		/datum/sprite_accessory/tail/corvid,
 		/datum/sprite_accessory/tail/hawk,
+		/datum/sprite_accessory/tail/owl,
+		/datum/sprite_accessory/tail/forked_long,
+		/datum/sprite_accessory/tail/haven,
+		/datum/sprite_accessory/tail/swallow,
+		/datum/sprite_accessory/tail/pinecone
 	)
