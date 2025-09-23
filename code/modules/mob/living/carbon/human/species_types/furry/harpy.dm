@@ -97,6 +97,7 @@
 		/datum/body_marking_set/tiger,
 		/datum/body_marking_set/tiger_dark,
 		/datum/body_marking_set/harpy_feet_claws,
+		/datum/body_marking_set/harpy_leg,
 	)
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
