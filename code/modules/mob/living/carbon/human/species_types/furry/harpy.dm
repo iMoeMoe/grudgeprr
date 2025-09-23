@@ -14,7 +14,7 @@
 	Their serene songs and blissful music can be heard echoing far below, guiding travelers and thieves both to respite... or treasure. For as lifted into grace as they might be, these 'magpies' earn such a nickname from instinctual Matthiosan greed and love for anything that shines. \
 	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers. </br> \
 	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-3 CON | -2 STR</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 PER | +1 INT | +2 SPD</b></span> </br> \
-	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Flight | Innate Singing</b></span> </br> \
+	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Flight | Innate Singing | Strong Bites</b></span> </br> \
 	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear boots</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>Slight Fall Damage Reduction </span></b>"
 
 	skin_tone_wording = "Ancestry"
@@ -49,7 +49,7 @@
 		)
 
 	race_bonus = list(STAT_CONSTITUTION = -3, STAT_STRENGTH = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_SPEED = 2)
-	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1) // hahahahahh 
+	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1, TRAIT_STRONGBITE) // hahahahahh 
 	inherent_skills = list(
 		/datum/skill/misc/music = 3,
 	)
@@ -96,6 +96,7 @@
 		/datum/body_marking_set/socks,
 		/datum/body_marking_set/tiger,
 		/datum/body_marking_set/tiger_dark,
+		/datum/body_marking_set/harpy_feet_claws,
 	)
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
