@@ -465,6 +465,16 @@
 	desc = "I have to be careful where I step..."
 	icon_state = "knotted"
 
+/atom/movable/screen/alert/status_effect/knotted/Click()
+	..()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.sexcon)
+		return FALSE
+	if(L.sexcon.knotted_status == KNOTTED_AS_TOP)
+		var/do_forceful_removal = L.sexcon.arousal > MAX_AROUSAL / 3 // considered still hard, let it rip like a beyblade
+		L.sexcon.knot_remove(forceful_removal = do_forceful_removal)
+	return FALSE
+
 /datum/status_effect/jaw_gaped
 	id = "jaw_gaped"
 	duration = 30 SECONDS
