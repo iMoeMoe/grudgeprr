@@ -326,6 +326,9 @@
 		var/turf/open/transparent/openspace/turf_above = get_step_multiz(C, UP)
 		if(C.canZMove(UP, turf_above))
 			if(do_after(C, 3))
+				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
+				var/stamina_cost_final = round((10 - athletics_skill), 1)
+				C.stamina_add(stamina_cost_final)
 				C.forceMove(turf_above)
 		else
 			to_chat(C, span_red("I can't fly up there!!"))
@@ -348,6 +351,9 @@
 		var/turf/open/transparent/openspace/turf_down = get_step_multiz(C, DOWN)
 		if(C.canZMove(DOWN, turf_down))
 			if(do_after(C, 3))
+				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
+				var/stamina_cost_final = round((9 - athletics_skill), 1)
+				C.stamina_add(stamina_cost_final)
 				C.forceMove(turf_down)
 		else
 			to_chat(C, span_red("I can't fly down there!!"))

@@ -87,24 +87,27 @@
 /obj/effect/proc_holder/spell/self/harpy_flight/cast(mob/living/carbon/human/user)
 	var/harpy_AC = user.highest_ac_worn()
 	if(harpy_AC == ARMOR_CLASS_NONE)
-		if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
-			if(user.mobility_flags & MOBILITY_STAND)
-				if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA))
-					to_chat(user, span_bloody("I am too energetic to control my flight!</br>AGHH!!"))
-					user.Knockdown(10)
+		if(!user.pulledby)
+			if(!user.has_status_effect(/datum/status_effect/debuff/harpy_flight))
+				if(user.mobility_flags & MOBILITY_STAND)
+					if(HAS_TRAIT(user, TRAIT_INFINITE_STAMINA))
+						to_chat(user, span_bloody("I am too energetic to control my flight!</br>AGHH!!"))
+						user.Knockdown(10)
+					else
+						if(do_after(user, 10))
+							user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
+							playsound(user, pick(swoop_sound), 100)
+							user.emote("wingsfly", forced = TRUE)
+							if(prob(1)) // somebody, call saint jiub!!
+								playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
 				else
-					if(do_after(user, 10))
-						user.apply_status_effect(/datum/status_effect/debuff/harpy_flight)
-						playsound(user, pick(swoop_sound), 100)
-						user.emote("wingsfly", forced = TRUE)
-						if(prob(1)) // somebody, call saint jiub!!
-							playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
+					to_chat(user, span_bloody("I can't fly while imbalanced like this! AGHH!!"))
 			else
-				to_chat(user, span_bloody("I can't fly while imbalanced like this! AGHH!!"))
+				to_chat(user, span_bloody("Wah, back on the ground! How... quaint!!")) // sad emoji
+				user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+				playsound(user, pick(swoop_sound), 100)
+				user.emote("wingsfly", forced = TRUE)
 		else
-			to_chat(user, span_bloody("Wah, back on the ground! How... quaint!!")) // sad emoji
-			user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
-			playsound(user, pick(swoop_sound), 100)
-			user.emote("wingsfly", forced = TRUE)
+			to_chat(user, span_bloody("SOMEONE'S <b>HOLDING ME</b>, I CAN'T GET OFF THE GROUND LIKE THIS! </br> THE CRUELTY!!"))
 	else
 		to_chat(user, span_bloody("THE ARMOR WEIGHS ME DOWN!!")) // LIGHT ON YO FEET SOULJA
