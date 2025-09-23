@@ -6,7 +6,7 @@
 	if(user == target)
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return
+		return FALSE
 	return TRUE
 
 /datum/sex_action/thighjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
