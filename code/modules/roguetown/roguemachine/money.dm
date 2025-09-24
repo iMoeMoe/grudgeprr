@@ -162,7 +162,8 @@ GLOBAL_VAR(moneymaster)
 				type_to_put = /obj/item/roguecoin/silver
 				zenars_to_put = zenars
 			else
-				new /obj/item/roguecoin/silver(T, zenars)
+				// Create multiple stacks if needed
+				while(zenars > 0)
 					var/stack_size = min(zenars, 20)
 					var/obj/item/roguecoin/silver_stack = new /obj/item/roguecoin/silver(T, stack_size)
 					if(user && zenars == stack_size) // Only put first stack in hands
