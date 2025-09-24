@@ -29,7 +29,6 @@
 	name = "harpy's song"
 	icon_state = "harpysong"		//Pulsating heart energy thing.
 	desc = "The blessed essence of harpysong. How did you get this... you monster!"
-	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/obj/item/rogue/instrument/vocals/harpy_vocals/vocals
 
 /obj/item/organ/vocal_cords/harpy/Initialize()
@@ -38,18 +37,36 @@
 
 /obj/item/organ/vocal_cords/harpy/Insert(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+	if(M.mind)
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/harpy_sing)
 
 /obj/item/organ/vocal_cords/harpy/Remove(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
+	if(M.mind)
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/harpy_sing)
 
-/obj/item/organ/vocal_cords/harpy/ui_action_click(owner)
-	name = "Harpy's song"
+/obj/effect/proc_holder/spell/self/harpy_sing
+	name = "Harpy's Song"
 	desc = "Project your voice through song."
-	var/mob/living/carbon/human/user = owner
-	var/obj/item/organ/vocal_cords/harpy/vocal_cords = user.getorganslot(ORGAN_SLOT_VOICE)
-	if(!istype(vocal_cords) || !vocal_cords.vocals)
-		return
-	vocal_cords.vocals.attack_self(user)
+	releasedrain = 10
+	chargedrain = 0
+	chargetime = 0
+	overlay_state = "love"
+	movement_interrupt = FALSE
+	associated_skill = null
+	antimagic_allowed = TRUE
+	recharge_time = 20
+	miracle = FALSE
+
+/obj/effect/proc_holder/spell/self/harpy_sing/cast(mob/living/carbon/human/user)
+	. = ..()
+	if(!user.has_status_effect(/datum/status_effect/buff/playing_music))
+		user.emote("clearthroat", forced = TRUE)
+	var/mob/living/carbon/human/harpy = user
+	var/obj/item/organ/vocal_cords/harpy/vocal_cords = harpy.getorganslot(ORGAN_SLOT_VOICE)
+	vocal_cords.vocals.attack_self(harpy)
+	if(prob(1)) // somebody, call saint jiub!!
+		playsound(user, 'sound/foley/footsteps/flight_sounds/cliffracer.ogg', 100)
 
 /obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"

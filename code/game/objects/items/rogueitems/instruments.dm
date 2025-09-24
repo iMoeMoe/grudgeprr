@@ -74,6 +74,8 @@
 		groupplaying = FALSE
 		soundloop.stop()
 		user.remove_status_effect(/datum/status_effect/buff/playing_music)
+		if(not_held)
+			user.remove_status_effect(/datum/status_effect/buff/harpy_sing)
 		return
 	else
 		var/playdecision = alert(user, "Would you like to start a band?", "Band Play", "Yes", "No")
@@ -98,12 +100,12 @@
 				if(lastfilechange && world.time < lastfilechange + 3 MINUTES)
 					say("NOT YET!")
 					return
-				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+				playsound(user.loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 				var/infile = input(user, "CHOOSE A NEW SONG", src) as null|file
 
 				if(!infile)
 					return
-				if(playing || !(src in user.held_items) || user.get_inactive_held_item())
+				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
 					return
 
 				var/filename = "[infile]"
@@ -166,6 +168,8 @@
 				soundloop.cursound = null
 				soundloop.start(user) // why was the musical insturment set as a parent?
 				user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
+				if(not_held)
+					user.apply_status_effect(/datum/status_effect/buff/harpy_sing)
 				GLOB.scarlet_round_stats[STATS_SONGS_PLAYED]++
 			else
 				playing = FALSE

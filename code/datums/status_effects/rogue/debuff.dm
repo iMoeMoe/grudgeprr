@@ -550,10 +550,11 @@
 	tick_interval = 10
 	var/baseline_stamina_cost = 8
 	var/obj/effect/flyer_shadow/shadow
+	var/mob/living/carbon/human/harpy
 
 /datum/status_effect/debuff/harpy_flight/on_apply()
 	. = ..()
-	var/mob/living/carbon/human/harpy = owner
+	harpy = owner
 	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
 	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
 	harpy.drop_all_held_items()
@@ -567,7 +568,7 @@
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
-	var/mob/living/carbon/human/harpy = owner
+	harpy = owner
 	var/athletics_skill = max(harpy.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
 	var/stamina_cost_final = round((baseline_stamina_cost - athletics_skill), 1)
 	harpy.stamina_add(stamina_cost_final)
@@ -588,7 +589,7 @@
 
 /datum/status_effect/debuff/harpy_flight/on_remove()
 	. = ..()
-	var/mob/living/carbon/human/harpy = owner
+	harpy = owner
 	animate(harpy)
 	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 	harpy.dna.species.speedmod -= 0.3
@@ -617,9 +618,6 @@
 	alpha = 130
 	pixel_y = -5
 	var/datum/weakref/flying_ref
-
-/obj/effect/flyer_shadow/proc/canZMove(dir, turf/target)
-	return can_zTravel(target, dir) && (movement_type & FLYING)
 
 /obj/effect/flyer_shadow/Initialize(mapload, flying_mob)
 	. = ..()
