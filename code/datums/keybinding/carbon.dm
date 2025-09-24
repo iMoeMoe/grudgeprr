@@ -329,7 +329,13 @@
 				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
 				var/stamina_cost_final = round((10 - athletics_skill), 1)
 				C.stamina_add(stamina_cost_final)
+				var/mob/living/carbon/human/pulling = C.pulling
+				if(ismob(pulling))
+					C.pulling.forceMove(turf_above)
 				C.forceMove(turf_above)
+				C.start_pulling(pulling, state = 1, supress_message = TRUE)
+				if(C.pulling)
+					C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
 		else
 			to_chat(C, span_red("I can't fly up there!!"))
 	else
@@ -354,7 +360,13 @@
 				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
 				var/stamina_cost_final = round((9 - athletics_skill), 1)
 				C.stamina_add(stamina_cost_final)
+				var/mob/living/carbon/human/pulling = C.pulling
+				if(ismob(pulling))
+					C.pulling.forceMove(turf_down)
 				C.forceMove(turf_down)
+				C.start_pulling(pulling, state = 1, supress_message = TRUE)
+				if(C.pulling)
+					C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
 		else
 			to_chat(C, span_red("I can't fly down there!!"))
 	else

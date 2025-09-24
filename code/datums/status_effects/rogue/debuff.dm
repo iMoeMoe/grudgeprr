@@ -548,9 +548,13 @@
 	id = "harpy_flight"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/harpy_flight
 	tick_interval = 10
-	var/baseline_stamina_cost = 8
 	var/obj/effect/flyer_shadow/shadow
 	var/mob/living/carbon/human/harpy
+	var/stamcost = 9
+
+/datum/status_effect/debuff/harpy_flight/on_creation(mob/living/new_owner, new_stamcost)
+    stamcost = new_stamcost
+    return ..()
 
 /datum/status_effect/debuff/harpy_flight/on_apply()
 	. = ..()
@@ -558,8 +562,7 @@
 	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
 	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
 	harpy.drop_all_held_items()
-	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
-	harpy.put_in_hands(new /obj/item/clothing/active_wing, TRUE, FALSE, TRUE)
+	harpy.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/active_wing, TRUE, FALSE, TRUE)
 	harpy.movement_type = FLYING
 	harpy.dna.species.speedmod += 0.3
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
@@ -569,10 +572,11 @@
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
 	harpy = owner
-	var/athletics_skill = max(harpy.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
-	var/stamina_cost_final = round((baseline_stamina_cost - athletics_skill), 1)
-	harpy.stamina_add(stamina_cost_final)
-//	to_chat(harpy, span_warningbig("[stamina_cost_final] REMOVED!")) // debug msg
+	var/stamcost_final = stamcost
+	if(harpy.pulling)
+		stamcost_final = stamcost * 2
+	harpy.stamina_add(stamcost_final)
+//	to_chat(harpy, span_warningbig("[stamcost_final] REMOVED!")) // debug msg
 	check_movement()
 	if(harpy.pulledby)
 		to_chat(harpy, span_bloody("I can't fly while someone's grabbing me like this, AGHH!!"))
@@ -590,7 +594,8 @@
 /datum/status_effect/debuff/harpy_flight/on_remove()
 	. = ..()
 	harpy = owner
-	animate(harpy)
+	if(harpy.pulling)
+		harpy.stop_pulling()
 	harpy.remove_status_effect(/datum/status_effect/debuff/flight_sound_loop)
 	harpy.dna.species.speedmod -= 0.3
 	harpy.remove_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE)
@@ -598,9 +603,10 @@
 	harpy.movement_type = GROUND
 	tile_under_harpy.zFall(harpy)
 	remove_signals()
-	if(harpy.is_holding_item_of_type(/obj/item/clothing/active_wing))
-		for(var/obj/item/clothing/active_wing/I in harpy.held_items)
-			if(istype(I, /obj/item/clothing/active_wing))
+	animate(harpy)
+	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing))
+		for(var/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/I in harpy.held_items)
+			if(istype(I, /obj/item/rogueweapon/huntingknife/idagger/steel/active_wing))
 				qdel(I)
 
 /atom/movable/screen/alert/status_effect/debuff/harpy_flight
@@ -673,6 +679,7 @@
 			var/mob/living/flier = owner
 			flier.Knockdown(2 SECONDS)
 */
+
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 
 	UnregisterSignal(owner, list(
@@ -682,6 +689,47 @@
 
 	if(shadow)
 		QDEL_NULL(shadow)
+
+/datum/status_effect/debuff/harpy_passenger
+	id = "harpy_passenger"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/harpy_passenger
+	tick_interval = 5
+	var/mob/living/carbon/human/passenger
+	var/mob/living/carbon/human/harpy
+
+/datum/status_effect/debuff/harpy_passenger/on_apply()
+	. = ..()
+	passenger = owner
+	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
+	passenger.movement_type = FLYING
+	passenger.put_in_hands(new /obj/item/harpy_leg, TRUE, FALSE, TRUE) // will have to make it so ppl can't dismount themselves
+
+/datum/status_effect/debuff/harpy_passenger/tick()
+	. = ..()
+	passenger = owner
+	if(!passenger.pulledby)
+		passenger.remove_status_effect(/datum/status_effect/debuff/harpy_passenger)
+
+/datum/status_effect/debuff/harpy_passenger/on_remove()
+	. = ..()
+	passenger = owner
+	if(passenger.is_holding_item_of_type(/obj/item/harpy_leg))
+		for(var/obj/item/harpy_leg/I in passenger.held_items)
+			if(istype(I, /obj/item/harpy_leg))
+				qdel(I)
+	if(passenger.pulledby)
+		harpy = passenger.pulledby
+		harpy.stop_pulling()
+	animate(passenger)
+	var/turf/tile_under_passenger = passenger.loc
+	passenger.movement_type = GROUND
+	tile_under_passenger.zFall(passenger)
+
+/atom/movable/screen/alert/status_effect/debuff/harpy_passenger
+	name = "Being carried..."
+	desc = "ARGHHHH GET ME DOWN!!"
+	icon_state = "muscles"
 
 //////////////////////////////////////
 ///FLIGHT SOUND LOOP STATUS EFFECT///
