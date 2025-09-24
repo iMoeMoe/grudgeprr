@@ -114,18 +114,14 @@
 		return
 	if(user.used_intent.type == /datum/intent/wing/grab)
 		if(iscarbon(target))
-			to_chat(world, "target is carbon")
 			if(target != user)
 				if(user.pulling)
 					user.stop_pulling(TRUE)
 					return
 				if(target.checkdefense(user.used_intent, user))
-					to_chat(world, "checked defense and we failed")
 					return ..()
 				if(target.checkmiss(user))
-					to_chat(world, "checked miss and we failed")
 					return ..() 
-				to_chat(world, "target isnt us")
 				user.start_pulling(target, state = 1, supress_message = TRUE, item_override = src) // STATE = 1 OH GOD!! GRAB STATE PASSIVE = 0, AGRO = 1
 				/*
 				if(user.grab_state < AGRESSIVE)
