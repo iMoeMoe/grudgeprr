@@ -1,5 +1,5 @@
 /datum/sex_action/tailjob
-	name = "Jerk them off with tail"
+	name = "Use tail on their cock"
 	check_same_tile = FALSE
 	target_sex_part = SEX_PART_COCK
 
