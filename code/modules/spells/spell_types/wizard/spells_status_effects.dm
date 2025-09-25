@@ -2,7 +2,7 @@
 /datum/status_effect/buff/frostbite
 	id = "frostbite"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/frostbite
-	duration = 20 SECONDS
+	duration = 6 SECONDS
 	effectedstats = list("speed" = -2)
 
 /atom/movable/screen/alert/status_effect/buff/frostbite
