@@ -322,7 +322,7 @@
 	if (!iscarbon(user.mob))
 		return FALSE
 	var/mob/living/carbon/human/C = user.mob
-	if(C.movement_type & FLYING)
+	if(C.has_status_effect(/datum/status_effect/debuff/harpy_flight)) // gotta deslopify it, idk?
 		var/turf/open/transparent/openspace/turf_above = get_step_multiz(C, UP)
 		if(C.canZMove(UP, turf_above))
 			if(do_after(C, 3))
@@ -336,6 +336,9 @@
 				C.start_pulling(pulling, state = 1, supress_message = TRUE)
 				if(C.pulling)
 					C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
+					var/obj/item/grabbing/I = C.get_inactive_held_item()
+					if(istype(I, /obj/item/grabbing/))
+						I.icon_state = null
 		else
 			to_chat(C, span_red("I can't fly up there!!"))
 	else
@@ -353,7 +356,7 @@
 	if (!iscarbon(user.mob))
 		return FALSE
 	var/mob/living/carbon/C = user.mob
-	if(C.movement_type & FLYING)
+	if(C.has_status_effect(/datum/status_effect/debuff/harpy_flight)) // gotta redo check
 		var/turf/open/transparent/openspace/turf_down = get_step_multiz(C, DOWN)
 		if(C.canZMove(DOWN, turf_down))
 			if(do_after(C, 3))
@@ -367,6 +370,9 @@
 				C.start_pulling(pulling, state = 1, supress_message = TRUE)
 				if(C.pulling)
 					C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
+					var/obj/item/grabbing/I = C.get_inactive_held_item()
+					if(istype(I, /obj/item/grabbing/))
+						I.icon_state = null
 		else
 			to_chat(C, span_red("I can't fly down there!!"))
 	else

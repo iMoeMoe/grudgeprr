@@ -34,9 +34,10 @@
 	icon_state = "harpy_talon" // coder kitbash 5 minute sprite ugh
 	drop_sound = 'sound/blank.ogg'
 	force = 15 // same as iron dagger
-	gripped_intents = list(/datum/intent/wing/cut, /datum/intent/wing/shred, /datum/intent/wing/grab)
+	gripped_intents = list(/datum/intent/wing/cut, /datum/intent/wing/shred, /datum/intent/wing/grab, /datum/intent/wing/pick)
 	associated_skill = /datum/skill/combat/unarmed
 	w_class = WEIGHT_CLASS_HUGE
+	wlength = WLENGTH_GREAT
 	twohands_required = TRUE
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -56,7 +57,7 @@
 	penfactor = 0
 	chargetime = 0
 	swingdelay = 0
-	clickcd = 10
+	clickcd = 8
 	item_d_type = "slash"
 
 /datum/intent/wing/shred
@@ -79,7 +80,18 @@
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = 75
 	clickcd = 10
-	swingdelay = 15
+	swingdelay = 0
+	damfactor = 1.1
+	blade_class = BCLASS_PICK
+
+/datum/intent/wing/pick
+	name = "talon pick"
+	icon_state = "inpick"
+	attack_verb = list("stabs", "impales")
+	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+	penfactor = 75
+	clickcd = 14
+	swingdelay = 12
 	damfactor = 1.1
 	blade_class = BCLASS_PICK
 
@@ -129,12 +141,11 @@
 					target.grippedby(user, FALSE)
 				*/
 				if(user.pulling)
+					user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)
 					to_chat(user, span_bloody("I am carrying [target] with my talons!! Ha ha ha!!"))
-					user.emote("laugh", forced = TRUE)
 					var/obj/item/grabbing/I = user.get_inactive_held_item()
 					if(istype(I, /obj/item/grabbing/))
 						I.icon_state = null
-					user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)
 					target.apply_status_effect(/datum/status_effect/debuff/harpy_passenger)
 					return ..()
 	else

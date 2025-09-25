@@ -550,6 +550,7 @@
 	tick_interval = 10
 	var/obj/effect/flyer_shadow/shadow
 	var/mob/living/carbon/human/harpy
+	var/mob/living/carbon/human/passenger
 	var/stamcost = 9
 
 /datum/status_effect/debuff/harpy_flight/on_creation(mob/living/new_owner, new_stamcost)
@@ -579,9 +580,10 @@
 //	to_chat(harpy, span_warningbig("[stamcost_final] REMOVED!")) // debug msg
 	check_movement()
 	if(harpy.pulledby)
-		to_chat(harpy, span_bloody("I can't fly while someone's grabbing me like this, AGHH!!"))
-		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
-		harpy.Knockdown(3)		
+		passenger = harpy.pulling
+		if(harpy.pulledby != passenger)
+			to_chat(harpy, span_bloody("I can't fly while someone's grabbing me like this, AGHH!!"))
+			harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)		
 	if(harpy.mind)
 		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT*0.03), FALSE)
 	if(!(harpy.mobility_flags & MOBILITY_STAND))
@@ -714,6 +716,7 @@
 /datum/status_effect/debuff/harpy_passenger/on_remove()
 	. = ..()
 	passenger = owner
+	animate(passenger)
 	if(passenger.is_holding_item_of_type(/obj/item/harpy_leg))
 		for(var/obj/item/harpy_leg/I in passenger.held_items)
 			if(istype(I, /obj/item/harpy_leg))
@@ -721,7 +724,6 @@
 	if(passenger.pulledby)
 		harpy = passenger.pulledby
 		harpy.stop_pulling()
-	animate(passenger)
 	var/turf/tile_under_passenger = passenger.loc
 	passenger.movement_type = GROUND
 	tile_under_passenger.zFall(passenger)
