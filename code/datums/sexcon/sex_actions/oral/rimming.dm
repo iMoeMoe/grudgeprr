@@ -1,8 +1,10 @@
 /datum/sex_action/rimming
 	name = "Rim them"
+	user_sex_part = SEX_PART_JAWS
+	target_sex_part = SEX_PART_ANUS
 
 /datum/sex_action/rimming/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(user == target || !target.sexcon.can_zodomize())
 		return FALSE
 	return TRUE
 

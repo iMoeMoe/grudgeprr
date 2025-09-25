@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 3 // THREE GOONS!!
 	spawn_positions = 3
-	allowed_races = RACES_SECOND_CLASS_NO_GOLEM
+	allowed_races = RACES_SECOND_CLASS_NO_GOLEM // As opposed to the Inquisitor or Absolver, Orthodoxists could be "redeemed" "lesser" races and heretics.
 	disallowed_races = list(
 		/datum/species/lamia,
 	)
@@ -22,6 +22,10 @@
 	wanderer_examine = FALSE
 	advjob_examine = TRUE
 	give_bank_account = 15
+
+	virtue_restrictions = list(
+		/datum/virtue/combat/hollow_life,
+	)
 
 	job_subclasses = list(
 		/datum/advclass/psydoniantemplar,

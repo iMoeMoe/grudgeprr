@@ -12,6 +12,9 @@
 	icon_state = "instrike"
 	item_d_type = "blunt"
 
+/datum/intent/mace/strike/reach
+	reach = 2
+
 /datum/intent/mace/smash
 	name = "smash"
 	blade_class = BCLASS_SMASH
@@ -23,6 +26,9 @@
 	clickcd = 14
 	icon_state = "insmash"
 	item_d_type = "blunt"
+
+/datum/intent/mace/smash/reach
+	reach = 2
 
 /datum/intent/mace/smash/flataxe
 	damfactor = 1.2
@@ -36,11 +42,10 @@
 	icon_state = "instab"
 	reach = 2
 	clickcd = CLICK_CD_CHARGED
-	recovery = 30
+	recovery = 10
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 25
-	damfactor = 0.9
+	penfactor = 40 //Same as a dagger.
 	item_d_type = "stab"
 
 //blunt objs ฅ^•ﻌ•^ฅ
@@ -70,7 +75,6 @@
 	minstr = 7
 	wdefense = 2
 	wbalance = WBALANCE_HEAVY
-	blade_dulling = DULLING_SHAFT_METAL
 	intdamage_factor = 1.35
 	icon_angle_wielded = 50
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_blunt.ogg'
@@ -168,7 +172,6 @@
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/skill/craft/carpentry
-	blade_dulling = DULLING_SHAFT_WOOD
 	minstr = 7
 	resistance_flags = FLAMMABLE
 
@@ -202,7 +205,6 @@
 	minstr = 7
 	wdefense = 1
 	resistance_flags = FLAMMABLE
-	blade_dulling = DULLING_SHAFT_WOOD
 	grid_width = 32
 	grid_height = 96
 
@@ -254,7 +256,6 @@
 	smeltresult = /obj/item/ingot/steel
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
-	blade_dulling = DULLING_SHAFT_REINFORCED
 	wbalance = WBALANCE_SWIFT
 	resistance_flags = FIRE_PROOF
 	minstr = 7
@@ -284,7 +285,6 @@
 	wbalance = WBALANCE_NORMAL
 	associated_skill = /datum/skill/combat/swords
 	anvilrepair = /datum/skill/craft/carpentry
-	blade_dulling = DULLING_SHAFT_REINFORCED
 	resistance_flags = FLAMMABLE
 
 
@@ -362,7 +362,6 @@
 	pixel_x = -16
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	blade_dulling = DULLING_SHAFT_WOOD
 	dropshrink = 0.6
 	bigboy = TRUE
 	gripsprite = TRUE
@@ -393,8 +392,8 @@
 	icon_state = "polemace"
 	force = 15
 	force_wielded = 35
+	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/smash/reach, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
 	smeltresult = /obj/item/ingot/steel
-	blade_dulling = DULLING_SHAFT_METAL
 	smelt_bar_num = 2
 
 /obj/item/rogueweapon/mace/goden/steel/paalloy
@@ -411,6 +410,7 @@
 	icon_state = "pufferprod"
 	force = 15
 	force_wielded = 35
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash/reach, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
 	minstr = 11
 	max_integrity = 900
 	smeltresult = /obj/item/ingot/steelholy
@@ -420,7 +420,20 @@
 	name = "duel settler"
 	desc = "The tenets of ravoxian duels are enscribed upon the head of this maul."
 	icon_state = "ravoxhammer"
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/smash/reach, /datum/intent/effect/daze)
+
+/obj/item/rogueweapon/mace/goden/steel/tetsubo
+	name = "tetsubo"
+	desc = "A heavier variant of the kanabo, fitted with a steel sleeve bearing menacing spikes and favored by Ogrun Warlords. Requires immense strength to use, but hits like a raging bull."
+	icon_state = "tetsubo"
+	force = 20
+	force_wielded = 40 //Minotaur greataxe, but for blunt weapons
+	possible_item_intents = list(/datum/intent/mace/strike/reach)
+	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/smash/reach, /datum/intent/effect/daze)
+	sharpness = IS_SHARP
+	icon = 'icons/roguetown/weapons/64.dmi'
+	minstr = 15
+	slot_flags = ITEM_SLOT_BACK
 
 
 /obj/item/rogueweapon/mace/goden/psymace
@@ -456,7 +469,6 @@
 	icon_state = "iwarhammer"
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/iron
-	blade_dulling = DULLING_SHAFT_REINFORCED
 	wdefense = 3
 	intdamage_factor = 1.2
 
@@ -476,7 +488,6 @@
 	desc = "A fine steel warhammer, makes a satisfying sound when paired with a knight's helm."
 	icon_state = "swarhammer"
 	smeltresult = /obj/item/ingot/steel
-	blade_dulling = DULLING_SHAFT_METAL
 	wdefense = 4
 
 /obj/item/rogueweapon/mace/warhammer/getonmobprop(tag)

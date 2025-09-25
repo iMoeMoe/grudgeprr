@@ -57,8 +57,8 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/head/roguetown/bardhat
 
 /datum/loadout_item/spellcasterhat
-	name = "Spellcaster Hat"
-	path = /obj/item/clothing/head/roguetown/spellcasterhat
+	name = "Tattered Spellcaster Hat"
+	path = /obj/item/clothing/head/roguetown/spellcasterhat/light
 
 /datum/loadout_item/fancyhat
 	name = "Fancy Hat"
@@ -284,8 +284,8 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/clothing/suit/roguetown/shirt/robe
 
 /datum/loadout_item/spellcasterrobe
-	name = "Spellcaster Robe"
-	path = /obj/item/clothing/suit/roguetown/shirt/robe/spellcasterrobe
+	name = "Tattered Spellcaster Robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/spellcasterrobe/light
 
 /datum/loadout_item/formalsilks
 	name = "Formal Silks"
@@ -387,6 +387,22 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Nun Habit"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/nun
 
+/datum/loadout_item/worn_dobo_robe
+	name = "Worn Dobo Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/light
+
+/datum/loadout_item/floral_robe
+	name = "Floral Robes"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/light
+
+/datum/loadout_item/formal_robe
+	name = "Formal Dobo Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/light
+
+/datum/loadout_item/ronin_robe
+	name = "Ronin Dobo Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/light
+
 /datum/loadout_item/eastshirt1
 	name = "Black Foreign Shirt"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1
@@ -402,6 +418,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/leathertights
 	name = "Leather Tights"
 	path = /obj/item/clothing/under/roguetown/trou/leathertights
+
+/datum/loadout_item/rumaclanpants
+	name = "Cut-Throat Pants"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1/light
 
 /datum/loadout_item/trou
 	name = "Work Trousers"
@@ -634,3 +654,43 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/chain_leash
 	name = "Chain Leash"
 	path = /obj/item/leash/chain
+
+/datum/loadout_item/magic_recipes
+	name = "Guide to Arcyne"
+	path = /obj/item/recipe_book/magic
+
+/datum/loadout_item/alch_recipes
+	name = "Guide to Alchemy"
+	path = /obj/item/recipe_book/alchemy
+
+/datum/loadout_item/leather_recipes
+	name = "Guide to Leatherworking"
+	path = /obj/item/recipe_book/leatherworking
+
+/datum/loadout_item/sewing_recipes
+	name = "Guide to Tailoring"
+	path = /obj/item/recipe_book/sewing
+
+/datum/loadout_item/smith_recipes
+	name = "Guide to Smithing"
+	path = /obj/item/recipe_book/blacksmithing
+
+/datum/loadout_item/engi_recipes
+	name = "Guide to Engineering"
+	path = /obj/item/recipe_book/engineering
+
+/datum/loadout_item/build_recipes
+	name = "Guide to Building"
+	path = /obj/item/recipe_book/builder
+
+/datum/loadout_item/potter_recipes
+	name = "Guide to Pottery"
+	path = /obj/item/recipe_book/ceramics
+
+/datum/loadout_item/survival_recipes
+	name = "Guide to Survival"
+	path = /obj/item/recipe_book/survival
+
+/datum/loadout_item/cooking_recipes
+	name = "Guide to Cooking"
+	path = /obj/item/recipe_book/cooking

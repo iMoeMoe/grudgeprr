@@ -480,6 +480,12 @@
 		to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
 		H.Knockdown(20)
 		H.Paralyze(20)
+	if(HAS_TRAIT(H, TRAIT_HOLLOW_LIFE))
+		to_chat(H, span_userdanger("I can't pick up the silver, for I am one of the damned!"))
+		H.adjustFireLoss(60)
+		H.fire_act(1,5)
+		H.Knockdown(5)
+		H.Paralyze(5)
 
 /obj/item/clothing/neck/roguetown/psicross/silver/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	..()
@@ -508,7 +514,13 @@
 		H.Knockdown(20)
 		H.Paralyze(20)
 		return FALSE
-
+	if(HAS_TRAIT(H, TRAIT_HOLLOW_LIFE))
+		to_chat(H, span_userdanger("I can't equip the silver, for I am one of the damned!"))
+		H.adjustFireLoss(60)
+		H.fire_act(1,5)
+		H.Knockdown(5)
+		H.Paralyze(5)
+		return FALSE
 	return TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/g
@@ -585,12 +597,15 @@
 
 /obj/item/clothing/neck/roguetown/shalal
 	name = "desert rider medal"
-	desc = ""
+	desc = "Blood, like the desert sand, stains your hands, a crimson testament to the gold you covet. A desert rider, renowned mercenary of the far east, your shamshir whispers tales of centuries-old tradition. Your loyalty, a fleeting mirage in the shifting sands, will yield to the allure of fortune."
 	icon_state = "shalal"
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
 	sellprice = 15
 	anvilrepair = /datum/skill/craft/armorsmithing
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
+	grid_height = 32
+	grid_width = 32
 
 /obj/item/clothing/neck/roguetown/ornateamulet
 	name = "Ornate Amulet"

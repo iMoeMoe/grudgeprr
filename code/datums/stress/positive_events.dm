@@ -252,6 +252,16 @@
 	desc = span_green("I feel inspired by the sermon.")
 	timer = 20 MINUTES
 
+/datum/stressevent/champion
+	stressadd = -3
+	desc = span_green("I am near my ward!")
+	timer = 1 MINUTES
+
+/datum/stressevent/ward
+	stressadd = -3
+	desc = span_green("I am near my Champion! Oh, oh, Champion!")
+	timer = 1 MINUTES
+
 /datum/stressevent/goodloving
 	timer = 5 MINUTES
 	stressadd = -3
@@ -266,3 +276,13 @@
 	stressadd = -4
 	desc = span_green("I've seen someone completely at peace! Their happiness is contagious!")
 	timer = 3 MINUTES
+
+/datum/stressevent/soulchurnerdestroyed
+	timer = 10 MINUTES
+	stressadd = -40
+	desc = span_green("That disgusting box was destroyed, and its captives freed.")
+
+/datum/stressevent/soulchurnerdestroyed_psydon
+	timer = 5 MINUTES
+	stressadd = -2
+	desc = span_green("The box of souls was destroyed. I feel relief.")

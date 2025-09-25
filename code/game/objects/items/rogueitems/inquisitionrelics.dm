@@ -67,9 +67,13 @@
 /obj/item/psydonmusicbox/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(usr, TRAIT_INQUISITION))
-		desc = "A relic from the bowels of the Otavan cathedral's thaumaturgical workshops. Fourteen souls of heretics, all bound together, they will scream and protect us from magicks. It would be wise to not teach the heretics of its true nature, to only bring it to bear in dire circumstances."
+		. += "A relic from the bowels of the Otavan cathedral's thaumaturgical workshops. Fourteen souls of heretics, all bound together, they will scream and protect us from magicks. It would be wise to not teach the heretics of its true nature, to only bring it to bear in dire circumstances."
 	else
-		desc = "A cranked music box, it has the seal of the Otavan Inquisition on the side. It carries a somber feeling to it..."
+		. += "A cranked music box, it has the seal of the Otavan Inquisition on the side. It carries a somber feeling to it..."
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.has_status_effect(/datum/status_effect/buff/churnernegative))
+				. += span_userdanger("DESTROY IT!")
 
 /obj/item/psydonmusicbox/attack_self(mob/living/user)
 	. = ..()
@@ -96,6 +100,15 @@
 	if(soundloop)
 		QDEL_NULL(soundloop)
 	src.visible_message(span_cult("A great deluge of souls escapes the shattered box!"))
+	for (var/mob/living/carbon/human/H in hearers(7, src))
+		if (!H.client)
+			continue
+		if(!HAS_TRAIT(H, TRAIT_INQUISITION))
+			if(H?.patron?.type == /datum/patron/old_god)
+				H.add_stress(/datum/stressevent/soulchurnerdestroyed_psydon)
+			else
+				H.add_stress(/datum/stressevent/soulchurnerdestroyed)
+				to_chat(H, (span_hypnophrase("\"Thank you.\"")))
 	return ..()
 
 /obj/item/psydonmusicbox/update_icon()
@@ -997,7 +1010,7 @@ Inquisitorial armory down here
 		var/mob/living/carbon/C = victim
 		// if(get_location_accessible(C, BODY_ZONE_PRECISE_NECK))
 		playsound(loc, pick('sound/items/garrotechoke1.ogg', 'sound/items/garrotechoke2.ogg', 'sound/items/garrotechoke3.ogg', 'sound/items/garrotechoke4.ogg', 'sound/items/garrotechoke5.ogg'), 100, TRUE)
-		if(prob(40))
+		if(prob(40) && !HAS_TRAIT(C, TRAIT_NOBREATH))
 			C.emote("choke")
 		C.adjustOxyLoss(choke_damage)
 		C.visible_message(span_danger("[user] [pick("garrotes", "asphyxiates")] [C]!"), \
