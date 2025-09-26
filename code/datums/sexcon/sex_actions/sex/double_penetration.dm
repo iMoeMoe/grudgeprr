@@ -1,6 +1,7 @@
 /datum/sex_action/double_penetration_sex
 	name = "Fuck both their holes"
 	stamina_cost = 1.0
+	category = SEX_CATEGORY_PENETRATE
 	user_sex_part = SEX_PART_COCK
 	target_sex_part = SEX_PART_CUNT|SEX_PART_ANUS
 	knot_on_finish = TRUE

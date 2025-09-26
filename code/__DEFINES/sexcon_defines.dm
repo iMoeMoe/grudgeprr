@@ -57,6 +57,10 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define IMPREG_PROB_INCREMENT 10
 #define IMPREG_PROB_MAX 95
 
+#define SEX_CATEGORY_MISC 0
+#define SEX_CATEGORY_HANDS 1
+#define SEX_CATEGORY_PENETRATE 2
+
 #define SEX_PART_NULL 0
 #define SEX_PART_COCK (1<<0)
 #define SEX_PART_CUNT (1<<1)

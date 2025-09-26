@@ -43,6 +43,8 @@
 	var/using_zones = list()
 	/// Cache body parts used for accessibility check
 	var/access_zone_bitfield = SEX_ZONE_NULL
+	/// Menu based variables
+	var/action_category = SEX_CATEGORY_MISC
 	/// Knot based variables
 	var/do_knot_action = FALSE
 	var/knotted_status = KNOTTED_NULL // knotted state and used to prevent multiple knottings when we do not handle that case
@@ -623,6 +625,9 @@
 		dat += "<center><a href='?src=[REF(src)];task=stop'>Stop</a></center>"
 	else
 		dat += "<br>"
+	dat += "<center><a href='?src=[REF(src)];task=category_misc'>[action_category == SEX_CATEGORY_MISC ? "<font color='#eac8de'>OTHER</font>" : "OTHER"]</a> | "
+	dat += "<a href='?src=[REF(src)];task=category_hands'>[action_category == SEX_CATEGORY_HANDS ? "<font color='#eac8de'>HANDS</font>" : "HANDS"]</a> | "
+	dat += "<a href='?src=[REF(src)];task=category_penetrate'>[action_category == SEX_CATEGORY_PENETRATE ? "<font color='#eac8de'>PENETRATE</font>" : "PENETRATE"]</a></center>"
 	dat += "<table width='100%'><td width='50%'></td><td width='50%'></td><tr>"
 	var/i = 0
 	var/user_is_incapacitated = user.incapacitated()
@@ -631,6 +636,8 @@
 		target.sexcon.update_all_accessible_body_zones()
 	for(var/action_type in GLOB.sex_actions)
 		var/datum/sex_action/action = SEX_ACTION(action_type)
+		if(action_category != action.category)
+			continue
 		if(!action.shows_on_menu(user, target))
 			continue
 		dat += "<td>"
@@ -687,6 +694,12 @@
 		if("freeze_arousal")
 			if(aphrodisiac == 1)
 				arousal_frozen = !arousal_frozen
+		if("category_misc")
+			action_category = SEX_CATEGORY_MISC
+		if("category_hands")
+			action_category = SEX_CATEGORY_HANDS
+		if("category_penetrate")
+			action_category = SEX_CATEGORY_PENETRATE
 		if("toggle_knot")
 			do_knot_action = !do_knot_action
 	show_ui()

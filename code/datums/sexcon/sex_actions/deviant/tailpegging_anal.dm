@@ -1,6 +1,7 @@
 /datum/sex_action/tailpegging_anal
 	name = "Use tail on their butt"
 	stamina_cost = 1.0
+	category = SEX_CATEGORY_PENETRATE
 	target_sex_part = SEX_PART_ANUS
 
 /datum/sex_action/tailpegging_anal/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)

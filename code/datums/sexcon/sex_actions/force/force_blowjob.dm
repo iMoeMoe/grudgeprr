@@ -2,6 +2,7 @@
 	name = "Force them to suck"
 	require_grab = TRUE
 	stamina_cost = 1.0
+	category = SEX_CATEGORY_PENETRATE
 	user_sex_part = SEX_PART_COCK
 	target_sex_part = SEX_PART_JAWS
 
