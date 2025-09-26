@@ -578,7 +578,6 @@
 		stamcost_final = stamcost * 2
 	harpy.stamina_add(stamcost_final)
 //	to_chat(harpy, span_warningbig("[stamcost_final] REMOVED!")) // debug msg
-	check_movement()
 	if(harpy.pulledby)
 		passenger = harpy.pulling
 		if(harpy.pulledby != passenger)
@@ -632,7 +631,6 @@
 	if(flying_mob)
 		flying_ref = WEAKREF(flying_mob)
 	transform = matrix() * 0.8 // Make the shadow slightly smaller
-	add_filter("shadow_blur", 1, gauss_blur_filter(1))
 
 /obj/effect/flyer_shadow/Destroy()
 	flying_ref = null
