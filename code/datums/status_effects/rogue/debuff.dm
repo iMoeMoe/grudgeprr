@@ -638,7 +638,6 @@
 
 /datum/status_effect/debuff/harpy_flight/proc/init_signals()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
-//	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMGE, PROC_REF(check_damage))
 
 /datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source)
 	SIGNAL_HANDLER
@@ -665,25 +664,10 @@
 	else
 		var/turf/og_turf = get_turf(owner)
 		shadow = new /obj/effect/flyer_shadow(og_turf, owner)
-/*
-/datum/status_effect/debuff/harpy_flight/proc/check_damage(datum/source, damage, damagetype, def_zone)
-	SIGNAL_HANDLER
-
-	if(damagetype != BRUTE || damagetype != BURN)
-		return
-
-	if(prob(damage / 4))
-		to_chat(owner, span_warning("The damage knocks you out of the air!"))
-		fall()
-		if(isliving(owner))
-			var/mob/living/flier = owner
-			flier.Knockdown(2 SECONDS)
-*/
 
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 
 	UnregisterSignal(owner, list(
-//		COMSIG_MOB_APPLY_DAMGE,
 		COMSIG_MOVABLE_MOVED,
 	))
 
