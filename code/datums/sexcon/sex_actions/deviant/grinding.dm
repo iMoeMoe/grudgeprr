@@ -21,7 +21,7 @@
 /datum/sex_action/grind_body/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/do_subtle = !prob(user.sexcon.force > SEX_FORCE_MID ? 2 : 5)
 	user.sexcon.show_progress = !do_subtle
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds [target]'s [lowertext(bodyzone2readablezone(user.zone_selected))]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(user.sexcon.spanify_force("[user] [do_subtle ? pick("subtly","sneakily","covertly","stealthily","quietly") : user.sexcon.get_generic_force_adjective()] grinds [target]'s [lowertext(bodyzone2readablezone(user.zone_selected))]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		if(user.sexcon.force > SEX_FORCE_HIGH)
 			playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
