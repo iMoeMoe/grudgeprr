@@ -582,7 +582,10 @@
 		passenger = harpy.pulling
 		if(harpy.pulledby != passenger)
 			to_chat(harpy, span_bloody("I can't fly while someone's grabbing me like this, AGHH!!"))
-			harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)		
+			harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
+	if(harpy.buckled)
+		to_chat(harpy, span_bloody("Ha-ha, time to rest my wings!"))
+		harpy.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
 	if(harpy.mind)
 		harpy.mind.add_sleep_experience(/datum/skill/misc/athletics, (harpy.STAINT*0.03), FALSE)
 	if(!(harpy.mobility_flags & MOBILITY_STAND))
@@ -643,34 +646,29 @@
 	SIGNAL_HANDLER
 
 	if(shadow)
-
 		var/turf/og_turf = get_turf(owner)
-		var/turf/turf1 = GET_TURF_BELOW(get_turf(owner))
-		var/turf/turf2 = GET_TURF_BELOW(get_turf(turf1))
-		var/turf/turf3 = GET_TURF_BELOW(get_turf(turf2))
-		var/turf/turf4 = GET_TURF_BELOW(get_turf(turf3))
-
 		if(og_turf) // hey as long as it works smile emoji
 			shadow.forceMove(og_turf)
+			var/turf/turf1 = GET_TURF_BELOW(get_turf(owner))
 			if(isopenspace(og_turf) && (turf1))
 				shadow.forceMove(turf1)
+				var/turf/turf2 = GET_TURF_BELOW(get_turf(turf1))
 				if(isopenspace(turf1) && (turf2))
 					shadow.forceMove(turf2)
+					var/turf/turf3 = GET_TURF_BELOW(get_turf(turf2))
 					if(isopenspace(turf2) && (turf3))
 						shadow.forceMove(turf3)
+						var/turf/turf4 = GET_TURF_BELOW(get_turf(turf3))
 						if(isopenspace(turf3) && (turf4))
 							shadow.forceMove(turf4)
-
 	else
 		var/turf/og_turf = get_turf(owner)
 		shadow = new /obj/effect/flyer_shadow(og_turf, owner)
 
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
-
 	UnregisterSignal(owner, list(
 		COMSIG_MOVABLE_MOVED,
 	))
-
 	if(shadow)
 		QDEL_NULL(shadow)
 
