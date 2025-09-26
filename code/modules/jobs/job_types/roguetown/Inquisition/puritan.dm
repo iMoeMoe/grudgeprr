@@ -81,7 +81,7 @@
 
 	subclass_skills = list(
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/tracking = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/stealing = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
@@ -139,13 +139,13 @@
 		if("Eucharist (Rapier)")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/relic(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Daybreak (Whip)")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 5, TRUE)
 		if("Stigmata (Halberd)")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 
 
 ///The dirty, violent side of the Inquisition. Meant for confrontational, conflict-driven situations as opposed to simply sneaking around and asking questions. Templar with none of the miracles, but with all the muscles and more. 
