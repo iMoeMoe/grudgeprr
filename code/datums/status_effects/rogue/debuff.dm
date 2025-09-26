@@ -642,28 +642,20 @@
 /datum/status_effect/debuff/harpy_flight/proc/init_signals()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
 
-/datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source)
-	SIGNAL_HANDLER
+/datum/status_effect/debuff/harpy_flight/proc/check_movement(datum/source) // rewritten by @tmyqlfpir
+    SIGNAL_HANDLER
 
-	if(shadow)
-		var/turf/og_turf = get_turf(owner)
-		if(og_turf) // hey as long as it works smile emoji
-			shadow.forceMove(og_turf)
-			var/turf/turf1 = GET_TURF_BELOW(get_turf(owner))
-			if(isopenspace(og_turf) && (turf1))
-				shadow.forceMove(turf1)
-				var/turf/turf2 = GET_TURF_BELOW(get_turf(turf1))
-				if(isopenspace(turf1) && (turf2))
-					shadow.forceMove(turf2)
-					var/turf/turf3 = GET_TURF_BELOW(get_turf(turf2))
-					if(isopenspace(turf2) && (turf3))
-						shadow.forceMove(turf3)
-						var/turf/turf4 = GET_TURF_BELOW(get_turf(turf3))
-						if(isopenspace(turf3) && (turf4))
-							shadow.forceMove(turf4)
-	else
-		var/turf/og_turf = get_turf(owner)
-		shadow = new /obj/effect/flyer_shadow(og_turf, owner)
+    var/turf/cur_turf = get_turf(owner)
+    if(!cur_turf)
+        return
+    if(!shadow)
+        shadow = new /obj/effect/flyer_shadow(cur_turf, owner)
+    while(isopenspace(cur_turf))
+        var/turf/temp_turf = GET_TURF_BELOW(cur_turf)
+        if(!temp_turf || isclosedturf(temp_turf))
+            break
+        cur_turf = temp_turf
+    shadow.forceMove(cur_turf)
 
 /datum/status_effect/debuff/harpy_flight/proc/remove_signals()
 	UnregisterSignal(owner, list(
