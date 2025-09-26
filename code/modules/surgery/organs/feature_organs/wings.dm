@@ -76,6 +76,7 @@
 	movement_interrupt = FALSE
 	associated_skill = null
 	antimagic_allowed = TRUE
+	ignore_cockblock = TRUE
 	recharge_time = 5
 	miracle = FALSE
 	var/baseline_stamina_cost = 9

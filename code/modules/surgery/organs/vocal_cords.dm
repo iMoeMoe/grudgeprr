@@ -55,6 +55,7 @@
 	movement_interrupt = FALSE
 	associated_skill = null
 	antimagic_allowed = TRUE
+	ignore_cockblock = TRUE
 	recharge_time = 20
 	miracle = FALSE
 

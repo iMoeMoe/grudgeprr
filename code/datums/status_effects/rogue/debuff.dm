@@ -568,6 +568,7 @@
 	harpy.dna.species.speedmod += 0.3
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
+	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
 	init_signals()
 
 /datum/status_effect/debuff/harpy_flight/tick()
@@ -608,6 +609,7 @@
 	tile_under_harpy.zFall(harpy)
 	remove_signals()
 	animate(harpy)
+	REMOVE_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
 	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing))
 		for(var/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/I in harpy.held_items)
 			if(istype(I, /obj/item/rogueweapon/huntingknife/idagger/steel/active_wing))
