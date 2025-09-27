@@ -12,9 +12,6 @@
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	init_faith()
-
-/mob/living/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/movetype_handler)
 
 /mob/living/Destroy()
