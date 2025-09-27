@@ -560,8 +560,8 @@
 /datum/status_effect/debuff/harpy_flight/on_apply()
 	. = ..()
 	harpy = owner
-	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
-	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
+//	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+//	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
 	harpy.drop_all_held_items()
 	harpy.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/active_wing, TRUE, FALSE, TRUE)
 	harpy.movement_type |= FLYING
@@ -608,7 +608,7 @@
 	harpy.movement_type &= ~FLYING
 	tile_under_harpy.zFall(harpy)
 	remove_signals()
-	animate(harpy)
+//	animate(harpy)
 	REMOVE_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
 	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing))
 		for(var/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/I in harpy.held_items)
@@ -676,8 +676,8 @@
 /datum/status_effect/debuff/harpy_passenger/on_apply()
 	. = ..()
 	passenger = owner
-	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
-	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
+//	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+//	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
 	passenger.movement_type |= FLYING
 	passenger.put_in_hands(new /obj/item/harpy_leg, TRUE, FALSE, TRUE) // will have to make it so ppl can't dismount themselves
 
@@ -690,7 +690,7 @@
 /datum/status_effect/debuff/harpy_passenger/on_remove()
 	. = ..()
 	passenger = owner
-	animate(passenger)
+//	animate(passenger)
 	if(passenger.is_holding_item_of_type(/obj/item/harpy_leg))
 		for(var/obj/item/harpy_leg/I in passenger.held_items)
 			if(istype(I, /obj/item/harpy_leg))
