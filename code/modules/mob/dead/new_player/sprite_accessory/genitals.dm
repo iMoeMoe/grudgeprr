@@ -106,7 +106,7 @@
 	name = "Knotted Hemi"
 	default_colors = list("C52828", "C52828")
 
-/datum/sprite_accessory/penis/tapered_double_knotted_mammal
+/datum/sprite_accessory/penis/hemiknot_mammal
 	icon_state = "hemiknot"
 	name = "Knotted Hemi (Mammal)"
 	default_colors = list("C52828", "C52828")

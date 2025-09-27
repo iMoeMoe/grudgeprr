@@ -189,7 +189,7 @@
 	name = "Knotted Hemi Tapered Penis (Mammal)"
 	organ_type = /obj/item/organ/penis/tapered_double_knotted_mammal
 	sprite_accessories = list(
-		/datum/sprite_accessory/penis/tapered_double_knotted_mammal,
+		/datum/sprite_accessory/penis/hemiknot_mammal,
 		)
 
 /datum/customizer_choice/organ/penis/barbed
