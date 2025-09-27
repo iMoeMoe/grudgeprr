@@ -205,7 +205,6 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			var/turf/wall_for_message
 			var/climbing_skill = max(climber.get_skill_level(/datum/skill/misc/climbing), SKILL_LEVEL_NOVICE)
 			var/adjacent_wall_diff
-			var/climb_gear_bonus = 1 // bonus is defined here, we might use it for calculations still, like giving you +1 effective skill for climbing purposes, but rn it it's only used to halve your stamina costs
 			for(var/turf/closed/adjacent_wall in adjacent_wall_list) // we add any turf that is a wall, aka /turf/closed/...
 				adjacent_wall_diff = adjacent_wall.climbdiff
 				if(!(climbing_skill == 6))
@@ -224,7 +223,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 				var/sfx_vol = (100 - (climbing_skill * 10))
 				var/climb_along_delay = round(max(20 - (climbing_skill * 2) - (climber.STASPD/3), 5), 1)
 				var/climber_armor_class
-				var/baseline_stamina_cost = 15
+				var/baseline_stamina_cost = 30
 				if(climber.m_intent == MOVE_INTENT_SNEAK)
 					climb_along_delay = climb_along_delay * 1.5
 				if(do_after(climber, climb_along_delay, wall_for_message))
@@ -234,11 +233,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 						climber.visible_message(span_danger("The armor weighs me down!")) // if you can actually shuffle along the wall but wearing heavy armor, you get a grip on it... but fall, as a little treat
 					else
 						climber.movement_type = FLYING // the way this works is that we only really ever fall if we enter the open space turf with GROUND move type, otherwise we can just hover over indefinetely
-					if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
-						climb_gear_bonus = 2
-					var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1)
+					var/stamina_cost_final = round((baseline_stamina_cost / climbing_skill), 1)
 					climber.stamina_add(stamina_cost_final) // eat some of climber's stamina when we move onto the next tile
-					climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb) // continious drain of STAMINA and checks to remove the status effect if we are on solid stuff or branches
+					climber.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb, stamina_cost_final) // continious drain of STAMINA and checks to remove the status effect if we are on solid stuff or branches
 					climber.forceMove(climb_target) // while our MOVEMENT TYPE is FLYING, we move onto next tile and can't fall cos of the flying
 					climber.movement_type = GROUND // if we move and it's an empty space tile, we fall. otherwise we either just walk into a wall along which we climb and don't fall, or walk onto a solid turf, like... floor or water
 					if(climber.m_intent != MOVE_INTENT_SNEAK)

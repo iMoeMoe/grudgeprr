@@ -171,12 +171,9 @@
 			if(do_after(L, used_time, target = src))
 				var/pulling = user.pulling
 				var/mob/living/carbon/human/climber = user
-				var/baseline_stamina_cost = 20 // have to disable stamina regen while on wall bruh in energystamina.dm
-				var/climb_gear_bonus = 1
-				if((istype(climber.backr, /obj/item/clothing/climbing_gear)) || (istype(climber.backl, /obj/item/clothing/climbing_gear)))
-					climb_gear_bonus = 2
+				var/baseline_stamina_cost = 30 // have to disable stamina regen while on wall bruh in energystamina.dm
 				var/climbing_skill = max(climber.get_skill_level(/datum/skill/misc/climbing), SKILL_LEVEL_NOVICE)
-				var/stamina_cost_final = round(((baseline_stamina_cost / climbing_skill) / climb_gear_bonus), 1)
+				var/stamina_cost_final = round((baseline_stamina_cost / climbing_skill), 1)
 				if(ismob(pulling))
 					user.pulling.forceMove(target)
 				var/climber_armor_class = climber.highest_ac_worn()
@@ -201,7 +198,7 @@
 						if(WEST)
 							climber.setDir(WEST)
 							climber.set_mob_offsets("wall_press", _x = -12, _y = 0)
-					L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb)
+					L.apply_status_effect(/datum/status_effect/debuff/climbing_lfwb, stamina_cost_final)
 				user.start_pulling(pulling,supress_message = TRUE)
 				if(user.m_intent != MOVE_INTENT_SNEAK)
 					playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
