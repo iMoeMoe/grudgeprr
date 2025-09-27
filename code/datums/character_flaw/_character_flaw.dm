@@ -510,6 +510,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	desc = "I am cursed! Holy magic and silver metal burns my body."
 
 /datum/charflaw/damned/on_mob_creation(mob/user)
+	..()
 	ADD_TRAIT(user, TRAIT_HOLLOW_LIFE, TRAIT_GENERIC)
 
 /datum/charflaw/foreigner
