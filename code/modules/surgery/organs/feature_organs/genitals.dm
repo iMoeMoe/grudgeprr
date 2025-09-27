@@ -84,7 +84,7 @@
 
 /obj/item/organ/penis/tapered_double_knotted_mammal
 	name = "hemi knotted tapered penis"
-	penis_type = PENIS_TYPE_TAPERED_DOUBLE_KNOTTED
+	penis_type = PENIS_TYPE_TAPERED_DOUBLE_KNOTTED_MAMMAL
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/barbed
