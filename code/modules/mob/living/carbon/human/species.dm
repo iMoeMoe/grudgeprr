@@ -75,7 +75,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life /// A path to an outfit that is important for species life e.g. plasmaman outfit
 
-	var/flying_species = FALSE //is a flying species, just a check for some things
 	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
 	var/wings_icon = "Angel" //the icon used for the wings
 
