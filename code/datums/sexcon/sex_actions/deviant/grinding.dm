@@ -25,7 +25,7 @@
 	else
 		do_subtle = 0
 	user.sexcon.show_progress = !do_subtle
-	user.visible_message(user.sexcon.spanify_force("[user] [do_subtle ? pick("subtly","sneakily","covertly","stealthily","quietly") : user.sexcon.get_generic_force_adjective()] grinds [target]'s [lowertext(bodyzone2readablezone(user.zone_selected))]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(user.sexcon.spanify_force("[user] [do_subtle ? pick("subtly","sneakily","covertly","stealthily","quietly") : user.sexcon.get_generic_force_adjective()] grinds over [target]'s [lowertext(parse_zone(user.zone_selected))]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		if(user.sexcon.force > SEX_FORCE_HIGH)
 			playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
@@ -33,10 +33,10 @@
 			user.make_sucking_noise()
 		do_thrust_animate(user, target)
 
-	user.sexcon.perform_sex_action(user, 0.5, 0.5, TRUE)
+	user.sexcon.perform_sex_action(user, 1.5, 0.5, TRUE)
 	user.sexcon.handle_passive_ejaculation()
 
-	user.sexcon.perform_sex_action(target, 0.5, 0.5, TRUE)
+	user.sexcon.perform_sex_action(target, 1.5, 0.5, TRUE)
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/grind_body/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
