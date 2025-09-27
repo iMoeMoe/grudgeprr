@@ -41,3 +41,8 @@
 
 /datum/sex_action/scissoring/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] stops scissoring with [target]."))
+
+/datum/sex_action/scissoring/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(target.sexcon.finished_check())
+		return TRUE
+	return FALSE
