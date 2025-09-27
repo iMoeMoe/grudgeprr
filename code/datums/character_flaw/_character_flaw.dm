@@ -511,6 +511,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/damned/on_mob_creation(mob/user)
 	..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	H.mob_biotypes |= MOB_UNDEAD
 	ADD_TRAIT(user, TRAIT_HOLLOW_LIFE, TRAIT_GENERIC)
 
 /datum/charflaw/foreigner
