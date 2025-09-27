@@ -564,7 +564,7 @@
 	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
 	harpy.drop_all_held_items()
 	harpy.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/active_wing, TRUE, FALSE, TRUE)
-	harpy.movement_type = FLYING
+	harpy.movement_type |= FLYING
 	harpy.dna.species.speedmod += 0.3
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
@@ -605,7 +605,7 @@
 	harpy.dna.species.speedmod -= 0.3
 	harpy.remove_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE)
 	var/turf/tile_under_harpy = harpy.loc
-	harpy.movement_type = GROUND
+	harpy.movement_type &= ~FLYING
 	tile_under_harpy.zFall(harpy)
 	remove_signals()
 	animate(harpy)
@@ -678,7 +678,7 @@
 	passenger = owner
 	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
 	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
-	passenger.movement_type = FLYING
+	passenger.movement_type |= FLYING
 	passenger.put_in_hands(new /obj/item/harpy_leg, TRUE, FALSE, TRUE) // will have to make it so ppl can't dismount themselves
 
 /datum/status_effect/debuff/harpy_passenger/tick()
@@ -699,7 +699,7 @@
 		harpy = passenger.pulledby
 		harpy.stop_pulling()
 	var/turf/tile_under_passenger = passenger.loc
-	passenger.movement_type = GROUND
+	passenger.movement_type &= ~FLYING
 	tile_under_passenger.zFall(passenger)
 
 /atom/movable/screen/alert/status_effect/debuff/harpy_passenger
