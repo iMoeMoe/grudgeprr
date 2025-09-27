@@ -638,7 +638,7 @@
 		target.sexcon.update_all_accessible_body_zones()
 	for(var/action_type in GLOB.sex_actions)
 		var/datum/sex_action/action = SEX_ACTION(action_type)
-		if(action_category != action.category)
+		if(!(action_category&action.category))
 			continue
 		if(!action.shows_on_menu(user, target))
 			continue
