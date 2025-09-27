@@ -108,7 +108,7 @@
 
 /datum/sprite_accessory/penis/hemiknot_mammal
 	icon_state = "hemiknot"
-	name = "Knotted Hemi (Mammal)"
+	name = "Knotted Hemi"
 	default_colors = list("C52828", "C52828")
 
 /datum/sprite_accessory/testicles
