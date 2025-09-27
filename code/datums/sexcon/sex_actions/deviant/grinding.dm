@@ -33,10 +33,10 @@
 			user.make_sucking_noise()
 		do_thrust_animate(user, target)
 
-	user.sexcon.perform_sex_action(user, 1.5, 0.5, TRUE)
+	user.sexcon.perform_sex_action(user, 1, 0.5, TRUE)
 	user.sexcon.handle_passive_ejaculation()
 
-	user.sexcon.perform_sex_action(target, 1.5, 0.5, TRUE)
+	user.sexcon.perform_sex_action(target, 1, 0.5, TRUE)
 	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/grind_body/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
