@@ -49,22 +49,20 @@
 /obj/item/organ/wings/harpy
 	name = "harpy wings"
 	desc = "Oh, to fly again and feel the wind..."
+	var/list/nullspace_items = list()
 
 /obj/item/organ/wings/harpy/Insert(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-//	to_chat(world, "added wings")
 	if(M.mind)
 		if(isharpy(M))
-//			to_chat(world, "should add spell")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/harpy_flight)
+			src.nullspace_items += new /obj/item/rogueweapon/huntingknife/idagger/harpy_talons
 		else
 			to_chat(M, span_bloody("I have the wings, yes... BUT HOW THE FARK DO I USE THEM?!!"))
 
 /obj/item/organ/wings/harpy/Remove(mob/living/carbon/human/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-//	to_chat(world, "removed wings")
 	if(M.mind)
-//		to_chat(world, "should remove spell")
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/harpy_flight)
 
 /obj/effect/proc_holder/spell/self/harpy_flight

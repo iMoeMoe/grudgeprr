@@ -552,18 +552,23 @@
 	var/mob/living/carbon/human/harpy
 	var/mob/living/carbon/human/passenger
 	var/stamcost = 9
+	var/obj/item/organ/wings/harpy/harpy_wings
 
 /datum/status_effect/debuff/harpy_flight/on_creation(mob/living/new_owner, new_stamcost)
-    stamcost = new_stamcost
-    return ..()
+	stamcost = new_stamcost
+	harpy_wings = new_owner.getorganslot(ORGAN_SLOT_WINGS)
+	return ..()
 
 /datum/status_effect/debuff/harpy_flight/on_apply()
 	. = ..()
 	harpy = owner
-//	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
-//	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
+	animate(harpy, pixel_y = harpy.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+	animate(pixel_y = harpy.pixel_y - 3, time = 6) // thank you oog
 	harpy.drop_all_held_items()
-	harpy.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/active_wing, TRUE, FALSE, TRUE)
+	for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy_wings.nullspace_items)
+		var/talons_final = talons
+		harpy.put_in_hands(talons_final, TRUE, FALSE, TRUE)
+		break
 	harpy.movement_type |= FLYING
 	harpy.dna.species.speedmod += 0.3
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
@@ -608,12 +613,12 @@
 	harpy.movement_type &= ~FLYING
 	tile_under_harpy.zFall(harpy)
 	remove_signals()
-//	animate(harpy)
+	animate(harpy)
 	REMOVE_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
-	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing))
-		for(var/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/I in harpy.held_items)
-			if(istype(I, /obj/item/rogueweapon/huntingknife/idagger/steel/active_wing))
-				qdel(I)
+	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/harpy_talons))
+		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
+			harpy.dropItemToGround(talons, TRUE)
+			return
 
 /atom/movable/screen/alert/status_effect/debuff/harpy_flight
 	name = "Flying..."
@@ -676,8 +681,8 @@
 /datum/status_effect/debuff/harpy_passenger/on_apply()
 	. = ..()
 	passenger = owner
-//	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
-//	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
+	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
+	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
 	passenger.movement_type |= FLYING
 	passenger.put_in_hands(new /obj/item/harpy_leg, TRUE, FALSE, TRUE) // will have to make it so ppl can't dismount themselves
 
@@ -690,7 +695,7 @@
 /datum/status_effect/debuff/harpy_passenger/on_remove()
 	. = ..()
 	passenger = owner
-//	animate(passenger)
+	animate(passenger)
 	if(passenger.is_holding_item_of_type(/obj/item/harpy_leg))
 		for(var/obj/item/harpy_leg/I in passenger.held_items)
 			if(istype(I, /obj/item/harpy_leg))

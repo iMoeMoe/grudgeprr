@@ -27,18 +27,19 @@
     . = ..()
     . |= FALL_NO_MESSAGE
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons
 	name = "talons"
 	desc = "Harpy talons. Birds of prey and all..."
 	experimental_inhand = FALSE
 	icon_state = "harpy_talon" // coder kitbash 5 minute sprite ugh
 	drop_sound = 'sound/blank.ogg'
-	force = 15 // same as iron dagger
 	gripped_intents = list(/datum/intent/wing/cut, /datum/intent/wing/shred, /datum/intent/wing/grab, /datum/intent/wing/pick)
 	associated_skill = /datum/skill/combat/unarmed
 	w_class = WEIGHT_CLASS_HUGE
 	wlength = WLENGTH_GREAT
 	twohands_required = TRUE
+	force = 20
+	max_integrity = 150
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	no_effect = FALSE
@@ -95,33 +96,35 @@
 	damfactor = 1.1
 	blade_class = BCLASS_PICK
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/equipped(mob/user, slot, initial)
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/equipped(mob/user, slot, initial)
 	. = ..()
 	wielded = TRUE
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/attack_self(mob/user)
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/attack_self(mob/user)
 	if(user.pulling)
 		var/mob/living/passenger = user.pulling
 		user.stop_pulling()
 		passenger.remove_status_effect(/datum/status_effect/debuff/harpy_passenger)
 		return
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/dropped(mob/living/carbon/human/user)
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/Initialize()
 	. = ..()
-	if(QDELETED(src))
-		return
+	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
+
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/dropped(mob/living/carbon/human/user)
+	. = ..()
+	src.moveToNullspace()
 	if(user.pulling)
 		var/mob/living/passenger = user.pulling
 		user.stop_pulling(TRUE)
 		passenger.remove_status_effect(/datum/status_effect/debuff/harpy_passenger)
 	user.remove_status_effect(/datum/status_effect/debuff/harpy_flight)
-	qdel(src)
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
     . = ..()
     . |= FALL_NO_MESSAGE
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/active_wing/afterattack(mob/living/carbon/human/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/afterattack(mob/living/carbon/human/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
 	if(!proximity_flag)
 		return
 	if(user.used_intent.type == /datum/intent/wing/grab)
