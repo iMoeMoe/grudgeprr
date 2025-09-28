@@ -39,8 +39,8 @@
 	wlength = WLENGTH_GREAT
 	twohands_required = TRUE
 	force = 20
-	max_integrity = 150
-	item_flags = ABSTRACT
+	max_blade_int = 5000
+	max_integrity = 5000
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	no_effect = FALSE
 	pickup_sound = 'sound/blank.ogg'
