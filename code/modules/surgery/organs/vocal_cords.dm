@@ -30,7 +30,7 @@
 	icon_state = "harpysong"		//Pulsating heart energy thing.
 	desc = "The blessed essence of harpysong. How did you get this... you monster!"
 	var/obj/item/rogue/instrument/vocals/harpy_vocals/vocals
-
+/*
 /obj/item/organ/vocal_cords/harpy/Initialize()
 	. = ..()
 	vocals = new(src)  //okay, i think it'll be tied to the organ
@@ -44,7 +44,7 @@
 	. = ..()
 	if(M.mind)
 		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/harpy_sing)
-
+*/
 /obj/effect/proc_holder/spell/self/harpy_sing
 	name = "Harpy's Song"
 	desc = "Project your voice through song."

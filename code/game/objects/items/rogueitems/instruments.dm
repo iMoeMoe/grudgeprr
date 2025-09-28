@@ -74,8 +74,8 @@
 		groupplaying = FALSE
 		soundloop.stop()
 		user.remove_status_effect(/datum/status_effect/buff/playing_music)
-		if(not_held)
-			user.remove_status_effect(/datum/status_effect/buff/harpy_sing)
+//		if(not_held)
+//			user.remove_status_effect(/datum/status_effect/buff/harpy_sing)
 		return
 	else
 		var/playdecision = alert(user, "Would you like to start a band?", "Band Play", "Yes", "No")
@@ -93,19 +93,19 @@
 			if(!choice || !user)
 				return
 				
-			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
+			if(playing || !(src in user.held_items) || user.get_inactive_held_item())
 				return
 				
 			if(choice == "Upload New Song")
 				if(lastfilechange && world.time < lastfilechange + 3 MINUTES)
 					say("NOT YET!")
 					return
-				playsound(user.loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 				var/infile = input(user, "CHOOSE A NEW SONG", src) as null|file
 
 				if(!infile)
 					return
-				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
+				if(playing || !(src in user.held_items) || user.get_inactive_held_item())
 					return
 
 				var/filename = "[infile]"
@@ -126,7 +126,7 @@
 					song_list[songname] = curfile
 				return
 			curfile = song_list[choice]
-			if(!user || playing || !(src in user.held_items) && !(not_held))
+			if(!user || playing || !(src in user.held_items))
 				return
 			if(user.mind)
 				switch(user.get_skill_level(/datum/skill/misc/music))
@@ -155,7 +155,7 @@
 						soundloop.stress2give = stressevent
 					else
 						soundloop.stress2give = stressevent
-			if(!(src in user.held_items) && !(not_held))
+			if(!(src in user.held_items))
 				return
 			if(user.get_inactive_held_item())
 				playing = FALSE
@@ -166,10 +166,10 @@
 				playing = TRUE
 				soundloop.mid_sounds = list(curfile)
 				soundloop.cursound = null
-				soundloop.start(user) // why was the musical insturment set as a parent?
+				soundloop.start()
 				user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
-				if(not_held)
-					user.apply_status_effect(/datum/status_effect/buff/harpy_sing)
+//				if(not_held)
+//					user.apply_status_effect(/datum/status_effect/buff/harpy_sing)
 				GLOB.scarlet_round_stats[STATS_SONGS_PLAYED]++
 			else
 				playing = FALSE
