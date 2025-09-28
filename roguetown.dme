@@ -1549,6 +1549,7 @@
 #include "code\modules\jobs\job_types\roguetown\courtier\magician.dm"
 #include "code\modules\jobs\job_types\roguetown\courtier\physician.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\dungeoneer.dm"
+#include "code\modules\jobs\job_types\roguetown\garrison\gatemaster.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\manorguard.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\sergeant.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\squire.dm"
