@@ -9,7 +9,11 @@
 	name = "Shivering"
 	desc = "My body can't stop shaking."
 	icon_state = "debuff"
-	color = "#00fffb"
+
+/datum/status_effect/buff/frost/tick()
+	var/mob/living/target = owner
+	if(prob(20))
+		target.emote(pick("shiver"))
 
 /datum/status_effect/buff/frost/on_apply()
 	. = ..()
@@ -27,7 +31,6 @@
 	name = "Frostbite"
 	desc = "My limbs are frozen stiff!"
 	icon_state = "debuff"
-	color = "#00fffb" //talk about a coder sprite
 
 /datum/status_effect/buff/frostbite/on_apply()
 	. = ..()
