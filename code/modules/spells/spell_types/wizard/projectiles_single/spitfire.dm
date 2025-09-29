@@ -52,8 +52,8 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.has_status_effect(/datum/status_effect/buff/frost) || L.has_status_effect(/datum/status_effect/buff/frostbite))
-				visible_message(span_warning("[src] fizzles on contact with [target]!"))
-				playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
+				visible_message(span_warning("[src] extinguishes on contact with [target]!"))
+				playsound(get_turf(target), 'sound/items/firesnuff.ogg', 100)
 				L.remove_status_effect(/datum/status_effect/buff/frost)
 				L.remove_status_effect(/datum/status_effect/buff/frostbite)
 				qdel(src)
