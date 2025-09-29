@@ -1151,6 +1151,9 @@
 	var/combat_modifier = 1
 	var/agg_grab = FALSE
 
+	if(!L) // we're pulling ourself, abort
+		return FALSE
+
 	if(mind)
 		wrestling_diff += (get_skill_level(/datum/skill/combat/wrestling)) //NPCs don't use this
 	if(L.mind)
