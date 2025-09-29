@@ -10,7 +10,7 @@
 	releasedrain = 30
 	chargedrain = 1
 	chargetime = 8
-	recharge_time = 4 SECONDS //cooldown
+	recharge_time = 6 SECONDS //cooldown
 
 	warnie = "spellwarning"
 	no_early_release = TRUE
