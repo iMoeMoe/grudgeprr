@@ -93,7 +93,7 @@
 				return
 	if(istype(P, /obj/item/storage/keyring))
 		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K.keys)
+		for(var/obj/item/roguekey/KE in K)
 			if(KE.lockid == keycontrol)
 				locked = !locked
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
@@ -320,6 +320,8 @@
 
 			if(!findtext(namer, "s", -1)) // doesn't already end with "s"
 				for(var/obj/item/O in held_items)
+					if(O == I)
+						continue
 					if(O.type == I.type && (held_items[O]["NAME"]) == held_items[I]["NAME"])
 						namer += "s" //add a plural s!
 						break
