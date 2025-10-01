@@ -63,7 +63,7 @@
 /datum/sprite_accessory/underwear/braies
 	name = "Braies"
 	icon_state = "braies"
-	underwear_type = /obj/item/undies
+	underwear_type = /obj/item/undies/braies
 
 /datum/sprite_accessory/underwear/braies/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	if(owner.gender == FEMALE)
