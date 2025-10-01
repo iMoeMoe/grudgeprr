@@ -33,11 +33,9 @@
 
 	var/key
 	if(rep)
-		// build canonical key from the representative object
 		var/namer = held_items[rep]["NAME"] || rep.name
 		key = "[rep.type]_[namer]"
 	else
-		// assume param is already a key string
 		key = param
 
 	var/list/matches = list()
@@ -53,13 +51,11 @@
 		if(held_items.len < 30)
 			var/price_to_set = 0
 
-			// Check for an existing item with the same NAME
 			for(var/obj/item/I in held_items)
 				if(I.name == P.name)
 					price_to_set = held_items[I]["PRICE"]
 					break
 
-			// Insert with inherited price (or 0 if none exists yet)
 			held_items[P] = list()
 			held_items[P]["NAME"] = P.name
 			held_items[P]["PRICE"] = price_to_set
@@ -318,8 +314,17 @@
 	if(world.time > next_hawk)
 		next_hawk = world.time + rand(1 MINUTES, 2 MINUTES)
 		if(length(held_items))
-			var/item = pick(held_items)
-			say("[held_items[item]["NAME"]] for sale! [held_items[item]["PRICE"]] mammons!")
+			var/obj/item/I = pick(held_items)
+			var/namer = held_items[I]["NAME"]
+			namer = capitalize(namer)
+
+			if(!findtext(namer, "s", -1)) // doesn't already end with "s"
+				for(var/obj/item/O in held_items)
+					if(O.type == I.type && (held_items[O]["NAME"]) == held_items[I]["NAME"])
+						namer += "s" //add a plural s!
+						break
+
+			say("[namer] for sale! [held_items[I]["PRICE"]] mammons!")
 
 /obj/structure/roguemachine/vendor/centcom
 	name = "LANDLORD"
