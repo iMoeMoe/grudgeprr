@@ -63,7 +63,6 @@
 			if(BCLASS_BLUNT,BCLASS_PUNCH,BCLASS_BITE,BCLASS_LASHING,BCLASS_BURN,BCLASS_TWIST) // do not attempt to inject with these intents
 				return
 		if(HAS_TRAIT(target,TRAIT_NOMETABOLISM)) // do not bother infecting target if they cannot process reagents
-			dipper.reagents.clear_reagents()
 			return
 		var/reagentlog2 = dipper.reagents
 		log_combat(user, target, "poisoned", addition="with [reagentlog2]")
