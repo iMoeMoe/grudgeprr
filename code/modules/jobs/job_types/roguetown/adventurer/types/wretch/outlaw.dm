@@ -8,7 +8,7 @@
 	cmode_music = 'sound/music/combat_vaquero.ogg'
 
 	subclass_languages = list(/datum/language/thievescant)
-	traits_applied = list(TRAIT_DODGEEXPERT)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_END = 2,
