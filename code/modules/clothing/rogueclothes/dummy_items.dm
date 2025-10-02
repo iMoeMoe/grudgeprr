@@ -99,10 +99,10 @@
 	icon_state = "ingrab"
 	attack_verb = list("digs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 75
+	penfactor = 90
 	clickcd = 15
 	swingdelay = 0
-	damfactor = 1.1
+	damfactor = 1.3
 	blade_class = BCLASS_PICK
 
 /datum/intent/wing/pick
@@ -144,19 +144,15 @@
     . = ..()
     . |= FALL_NO_MESSAGE
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/afterattack(mob/living/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/attack(mob/living/target, mob/living/carbon/human/user)
 	if(user.used_intent.type == /datum/intent/wing/grab)
 		if(isliving(target))
 			if(target != user)
 				if(user.pulling)
 					user.stop_pulling(TRUE)
-					return
+					return ..() // remove ..() if problems arise
 				if(target.checkdefense(user.used_intent, user))
-					return ..()
-				if(target.checkmiss(user))
-					return ..() 
+					return FALSE
 				user.start_pulling(target, state = 1, supress_message = TRUE, item_override = src) // STATE = 1 OH GOD!! GRAB STATE PASSIVE = 0, AGRO = 1
 				/*
 				if(user.grab_state < AGRESSIVE)
@@ -170,9 +166,8 @@
 						I.icon_state = null
 					target.apply_status_effect(/datum/status_effect/debuff/harpy_passenger)
 					user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)
-					if(istype(target, /mob/living/simple_animal/hostile))
-						user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0) // brute forcing this shit vro..
-					return ..()
+					user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0) // brute forcing this shit vro..
+					return ..() // remove ..() if problems arise
 	else
 		return ..()
 
