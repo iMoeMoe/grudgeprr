@@ -1151,6 +1151,9 @@
 	var/combat_modifier = 1
 	var/agg_grab = FALSE
 
+	if(!L) // we're pulling ourself, abort
+		return FALSE
+
 	if(mind)
 		wrestling_diff += (get_skill_level(/datum/skill/combat/wrestling)) //NPCs don't use this
 	if(L.mind)
@@ -1811,8 +1814,12 @@
 			clear_fullscreen("remote_view", 0)
 
 /mob/living/update_mouse_pointer()
-	..()
-	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+	if (!client)
+		return
+	if(!client.charging && !atkswinging)
+		if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
+			client.mouse_pointer_icon = examine_cursor_icon
+	if (ranged_ability && ranged_ability.ranged_mousepointer)
 		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/vv_edit_var(var_name, var_value)
