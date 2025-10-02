@@ -39,12 +39,32 @@
 	wlength = WLENGTH_GREAT
 	twohands_required = TRUE
 	force = 20
-	max_blade_int = 300
-	max_integrity = 300
+	max_blade_int = 200
+	max_integrity = 250
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	no_effect = FALSE
 	pickup_sound = 'sound/blank.ogg'
 	sheathe_sound = 'sound/blank.ogg'
+
+	var/repair_amount = 5 //The amount of integrity the tattoos will repair themselves
+	var/repair_time = 250 //The amount of time between each repair
+	var/last_repair //last time the tattoos got repaired
+
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		START_PROCESSING(SSobj, src)
+		return
+
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/process()
+	if(obj_integrity >= max_integrity) 
+		STOP_PROCESSING(SSobj, src)
+		src.visible_message(span_notice("[src] are in a much better shape now, enough resting!"), vision_distance = 1)
+		return
+	else if(world.time > src.last_repair + src.repair_time)
+		src.last_repair = world.time
+		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
+	..()
 
 ///obj/item/rogueweapon/huntingknife/equipped(mob/user, slot, initial = FALSE) // idk if I should remove the sound, I think it's p neat even if a bit gamey
 
@@ -124,11 +144,11 @@
     . = ..()
     . |= FALL_NO_MESSAGE
 
-/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/afterattack(mob/living/carbon/human/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
+/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/afterattack(mob/living/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
 	if(!proximity_flag)
 		return
 	if(user.used_intent.type == /datum/intent/wing/grab)
-		if(iscarbon(target))
+		if(isliving(target))
 			if(target != user)
 				if(user.pulling)
 					user.stop_pulling(TRUE)
@@ -144,12 +164,14 @@
 					target.grippedby(user, FALSE)
 				*/
 				if(user.pulling)
-					user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)
 					to_chat(user, span_bloody("I am carrying [target] with my talons!! Ha ha ha!!"))
 					var/obj/item/grabbing/I = user.get_inactive_held_item()
 					if(istype(I, /obj/item/grabbing/))
 						I.icon_state = null
 					target.apply_status_effect(/datum/status_effect/debuff/harpy_passenger)
+					user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)
+					if(istype(target, /mob/living/simple_animal/hostile))
+						user.buckle_mob(target, TRUE, TRUE, FALSE, 0, 0) // brute forcing this shit vro..
 					return ..()
 	else
 		return ..()

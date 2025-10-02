@@ -684,6 +684,7 @@
 	animate(passenger, pixel_y = passenger.pixel_y + 3, time = 6, loop = -1) // thank you shadowdeath6
 	animate(pixel_y = passenger.pixel_y - 3, time = 6) // thank you oog
 	passenger.movement_type |= FLYING
+	passenger.drop_all_held_items() // think fast chucklenuts
 	passenger.put_in_hands(new /obj/item/harpy_leg, TRUE, FALSE, TRUE) // will have to make it so ppl can't dismount themselves
 
 /datum/status_effect/debuff/harpy_passenger/tick()
