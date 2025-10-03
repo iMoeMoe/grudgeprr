@@ -15,7 +15,11 @@
 		TRAIT_STRONGBITE,
 		TRAIT_WOODWALKER,
 		TRAIT_NASTY_EATER,
-		TRAIT_CALTROPIMMUNE
+		TRAIT_CALTROPIMMUNE,
+		TRAIT_LONGSTRIDER,
+		TRAIT_OUTDOORSMAN,
+		TRAIT_WOODSMAN
+
 	)
 	subclass_stats = list(
 		STATKEY_STR = 3,
@@ -52,4 +56,4 @@
 
 	H.cmode_music = 'sound/music/combat_berserker.ogg'
 	to_chat(H, span_danger("You have abandoned your humanity to run wild under the moon. The call of nature fills your soul!"))
-	wretch_select_bounty(H) 
+	wretch_select_bounty(H)
