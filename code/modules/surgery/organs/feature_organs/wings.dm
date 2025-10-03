@@ -15,6 +15,9 @@
 	///Whether the owner of wings has flight thanks to the wings
 	var/granted_flight
 
+	icon = 'icons/mob/sprite_accessory/wings/wings_64x32.dmi'
+	icon_state = "harpyfolded_FRONT"
+
 //TODO: Well you know what this flight stuff is a bit complicated and hardcoded, this is enough for now
 
 /obj/item/organ/wings/moth
@@ -46,7 +49,7 @@
 	name = "megamoth wings"
 	desc = "A pair of horrifyingly large, fuzzy wings. They look strong enough to lift you up in the air."
 
-/obj/item/organ/wings/harpy
+/obj/item/organ/wings/harpy // we could... make it an arm subtype... but im lazy!
 	name = "harpy wings"
 	desc = "Oh, to fly again and feel the wind..."
 	var/list/nullspace_items = list()
