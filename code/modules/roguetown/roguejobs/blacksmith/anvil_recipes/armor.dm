@@ -384,7 +384,7 @@
 	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/klapplong
 	craftdiff = 5
 
-/datum/anvil_recipe/armor/steel/helmet/klapplong
+/datum/anvil_recipe/armor/steel/helmet/psylonger
 	name = "Psylonger (+1 Steel, +1 Silver)"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/silver)
