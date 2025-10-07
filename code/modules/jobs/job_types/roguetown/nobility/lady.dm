@@ -48,6 +48,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch
 		id = /obj/item/scomstone/garrison
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
+		backr = /obj/item/storage/backpack/rogue/satchel
 	else if(should_wear_masc_clothes(H))
 		head = /obj/item/clothing/head/roguetown/nyle/consortcrown
 		pants = /obj/item/clothing/under/roguetown/tights
@@ -58,20 +59,19 @@
 		beltl = /obj/item/storage/keyring/royal
 		beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 		backr = /obj/item/storage/backpack/rogue/satchel
-		id = /obj/item/clothing/ring/silver
-	H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
+		id = /obj/item/scomstone/garrison
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/cooking, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
-	H.change_stat("intelligence", 3)
-	H.change_stat("endurance", 3)
-	H.change_stat("speed", 2)
-	H.change_stat("perception", 2)
+	H.change_stat("intelligence", 4)
+	H.change_stat("endurance", 1)
+	H.change_stat("speed", 4)
 	H.change_stat("fortune", 5)
 
 /obj/effect/proc_holder/spell/self/convertrole/servant
