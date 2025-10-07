@@ -67,11 +67,11 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/cooking, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
-	H.change_stat("intelligence", 4)
+	H.change_stat("intelligence", 3)
 	H.change_stat("endurance", 1)
-	H.change_stat("speed", 4)
+	H.change_stat("speed", 3)
 	H.change_stat("fortune", 5)
 
 /obj/effect/proc_holder/spell/self/convertrole/servant
