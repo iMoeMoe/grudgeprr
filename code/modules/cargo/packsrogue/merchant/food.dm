@@ -117,7 +117,7 @@
 
 /datum/supply_pack/rogue/food/eel
 	name = "Eel"
-	cost = 20
+	cost = 60
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/eel,
 					/obj/item/reagent_containers/food/snacks/fish/eel,
@@ -126,7 +126,7 @@
 
 /datum/supply_pack/rogue/food/carp
 	name = "Carp"
-	cost = 40
+	cost = 120
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/carp,
 					/obj/item/reagent_containers/food/snacks/fish/carp,
@@ -135,7 +135,7 @@
 
 /datum/supply_pack/rogue/food/angler
 	name = "Anglerfish"
-	cost = 60
+	cost = 180
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/angler,
 					/obj/item/reagent_containers/food/snacks/fish/angler,
@@ -144,7 +144,7 @@
 
 /datum/supply_pack/rogue/food/clownfish
 	name = "Clownfish"
-	cost = 40
+	cost = 120
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/fish/clownfish,
 					/obj/item/reagent_containers/food/snacks/fish/clownfish,
