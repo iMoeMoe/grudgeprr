@@ -17,10 +17,8 @@
 	)
 	subclass_stats = list(
 		STATKEY_END = 3,
-		STATKEY_CON = 3,
-		STATKEY_PER = 1,
-		STATKEY_STR = 2,
-		STATKEY_SPD = -2
+		STATKEY_CON = 2,
+		STATKEY_STR = 2
 	)
 
 	subclass_skills = list(
@@ -36,7 +34,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/psydoniantemplar
@@ -82,7 +80,7 @@
 		if("Bucket Helm")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
 
-	var/weapons = list("Sword", "Axe", "Whip", "Flail", "Mace", "Halberd")
+	var/weapons = list("Sword", "Axe", "Whip", "Flail", "Mace", "Spear")
 	var/weapon_choice = input(H,"Choose your PSYDONIAN weapon.", "TAKE UP PSYDON'S ARMS") as anything in weapons
 	switch(weapon_choice)
 		if("Sword")
@@ -101,7 +99,7 @@
 		if("Mace")
 			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/psymace(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-		if("Halberd")
-			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd(H), TRUE)
+		if("Spear")
+			H.put_in_hands(new /obj/item/rogueweapon/spear/psyspear(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 
