@@ -45,7 +45,6 @@
 			if(werewolf_attacker.client)
 				alert(werewolf_attacker, "Dendor's curse growing thin... Slaughter it is")
 			// always send a chat line as well (fallback / persistent log)
-			to_chat(werewolf_attacker, span_warning("Dendor's curse growing thin... Slaughter it is"))
 		return FALSE
 	werewolf_infection_timer = null
 	owner.flash_fullscreen("redflash3")
