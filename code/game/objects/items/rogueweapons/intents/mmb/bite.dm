@@ -100,7 +100,7 @@
 	if(!nodmg)
 		caused_wound = affecting.bodypart_attacked_by(BCLASS_BITE, dam2do, user, user.zone_selected, crit_message = TRUE)
 	visible_message(span_danger("[user] bites [src]'s [parse_zone(user.zone_selected)]![next_attack_msg.Join()]"), \
-					span_userdanger("[user] bites my [parse_zone(user.zone_selected)]![next_attack_msg.Join()]"))
+				span_userdanger("[user] bites my [parse_zone(user.zone_selected)]![next_attack_msg.Join()]"))
 
 	next_attack_msg.Cut()
 	/*
@@ -119,13 +119,13 @@
 				if(user.mind)
 					if(!HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
 						if(istype(caused_wound))
-							caused_wound.werewolf_infect_attempt()
+							caused_wound.werewolf_infect_attempt(user)
 
-				if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
-					to_chat(user, span_warning("BLEH! [bite_victim] tastes of SILVER! My gift cannot take hold."))
-				else
-					if(prob(30))
-						user.werewolf_feed(bite_victim, 10)
+			if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
+				to_chat(user, span_warning("BLEH! [bite_victim] tastes of SILVER! My gift cannot take hold."))
+			else if(prob(30))
+				user.werewolf_feed(bite_victim, 10)
+
 			/*
 				ZOMBIE INFECTION VIA BITE
 			*/
@@ -260,41 +260,41 @@
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(user.mind)
 					if(!HAS_TRAIT(C, TRAIT_SILVER_BLESSED))
-						caused_wound.werewolf_infect_attempt()
+						caused_wound.werewolf_infect_attempt(user)
 				if(prob(30))
 					user.werewolf_feed(C)
 
-			/*
-				ZOMBIE CHEW. ZOMBIFICATION
-			*/
-			var/datum/antagonist/zombie/zombie_antag = user.mind.has_antag_datum(/datum/antagonist/zombie)
-			if(zombie_antag && zombie_antag.has_turned)
-				var/datum/antagonist/zombie/existing_zombie = C.mind?.has_antag_datum(/datum/antagonist/zombie) //If the bite target is a zombie
-				if(!existing_zombie && caused_wound.zombie_infect_attempt())   // infect_attempt on wound
-					to_chat(user, span_danger("You feel your gift trickling into [C]'s wound...")) //message to the zombie they infected the target
-/*
+		/*
+			ZOMBIE CHEW. ZOMBIFICATION
+		*/
+		var/datum/antagonist/zombie/zombie_antag = user.mind.has_antag_datum(/datum/antagonist/zombie)
+		if(zombie_antag && zombie_antag.has_turned)
+			var/datum/antagonist/zombie/existing_zombie = C.mind?.has_antag_datum(/datum/antagonist/zombie) //If the bite target is a zombie
+			if(!existing_zombie && caused_wound.zombie_infect_attempt())   // infect_attempt on wound
+				to_chat(user, span_danger("You feel your gift trickling into [C]'s wound...")) //message to the zombie they infected the target
+	/*
 	Code below is for a zombie smashing the brains of unit. The code expects the brain to be part of the head which is not the case with AP. Kept for posterity in case it's used in an overhaul.
-*/
-/*			if(user.mind.has_antag_datum(/datum/antagonist/zombie))
-				var/mob/living/carbon/human/H = C
-				if(istype(H))
-					INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, zombie_infect_attempt))
-				if(C.stat)
-					if(istype(limb_grabbed, /obj/item/bodypart/head))
-						var/obj/item/bodypart/head/HE = limb_grabbed
-						if(HE.brain)
-							QDEL_NULL(HE.brain)
-							C.visible_message("<span class='danger'>[user] consumes [C]'s brain!</span>", \
-								"<span class='userdanger'>[user] consumes my brain!</span>", "<span class='hear'>I hear a sickening sound of chewing!</span>", COMBAT_MESSAGE_RANGE, user)
-							to_chat(user, "<span class='boldnotice'>Braaaaaains!</span>")
-							if(!user.mob_timers["zombie_tri"])
-								user.mob_timers["zombie_tri"] = world.time
-							playsound(C.loc, 'sound/combat/fracture/headcrush (2).ogg', 100, FALSE, -1)
-							return*/
+	*/
+	/*		if(user.mind.has_antag_datum(/datum/antagonist/zombie))
+			var/mob/living/carbon/human/H = C
+			if(istype(H))
+				INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, zombie_infect_attempt))
+			if(C.stat)
+				if(istype(limb_grabbed, /obj/item/bodypart/head))
+					var/obj/item/bodypart/head/HE = limb_grabbed
+					if(HE.brain)
+						QDEL_NULL(HE.brain)
+						C.visible_message("<span class='danger'>[user] consumes [C]'s brain!</span>", \
+						"<span class='userdanger'>[user] consumes my brain!</span>", "<span class='hear'>I hear a sickening sound of chewing!</span>", COMBAT_MESSAGE_RANGE, user)
+						to_chat(user, "<span class='boldnotice'>Braaaaaains!</span>")
+						if(!user.mob_timers["zombie_tri"])
+							user.mob_timers["zombie_tri"] = world.time
+						playsound(C.loc, 'sound/combat/fracture/headcrush (2).ogg', 100, FALSE, -1)
+						return*/
 	else
 		C.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 	C.visible_message(span_danger("[user] bites [C]'s [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), \
-					span_userdanger("[user] bites my [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of chewing!"), COMBAT_MESSAGE_RANGE, user)
+				span_userdanger("[user] bites my [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of chewing!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("I bite [C]'s [parse_zone(sublimb_grabbed)].[C.next_attack_msg.Join()]"))
 	C.next_attack_msg.Cut()
 	log_combat(user, C, "limb chewed [sublimb_grabbed] ")
@@ -425,3 +425,4 @@
 							C.update_health_hud()
 					if("No")
 						to_chat(user, span_warning("I decide [C] is unworthy."))
+

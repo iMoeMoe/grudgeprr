@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(werewolf_infection_timer)
 		deltimer(werewolf_infection_timer)
 		werewolf_infection_timer = null
-		werewolf_infect_attempt()
+		werewolf_infect_attempt(null)
 	if(mortal && HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
 		affected.death()
 

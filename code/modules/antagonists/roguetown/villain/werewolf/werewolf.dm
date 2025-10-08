@@ -95,6 +95,15 @@
 		return already_wolfy
 	if(!can_werewolf())
 		return
+	// hard cap of 5 werewolves at a time
+	var/limit = 5
+	var/count = 0
+	for(var/datum/mind/M in SSticker.minds)
+		if(M && M.has_antag_datum(/datum/antagonist/werewolf))
+			count++
+	if(count >= limit)
+		// return false cause cap hit
+		return FALSE
 	return mind.add_antag_datum(werewolf_type)
 
 /mob/living/carbon/human/proc/werewolf_infect_attempt()
