@@ -4,8 +4,8 @@
 	department_flag = PEASANTS
 	faction = "Station"
 	// Unlimited bandit slots: disable cap so "Bandit is unavailable" due to full slots won't trigger
-	total_positions = -1
-	spawn_positions = -1
+	total_positions = 7
+	spawn_positions = 7
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "Long ago you did a crime worthy of your bounty being hung on the wall outside of the local inn. You now live with your fellow freemen in the bog, and generally get up to no good."
@@ -17,7 +17,7 @@
 
 	display_order = JDO_BANDIT
 	announce_latejoin = FALSE
-	min_pq = null
+	min_pq = 3
 	max_pq = null
 	round_contrib_points = 5
 
