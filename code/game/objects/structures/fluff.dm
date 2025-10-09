@@ -1012,7 +1012,8 @@
 /obj/structure/fluff/statue/evil/attackby(obj/item/W, mob/user, params)
 	if(!HAS_TRAIT(user, TRAIT_COMMIE))
 		return
-	var/donatedamnt = W.get_real_price()
+	// Use integer amounts for donations/display (no fractional values)
+	var/donatedamnt = round(W.get_real_price())
 	if(user.mind)
 		if(user)
 			if(W.flags_1 & HOARDMASTER_SPAWNED_1)
@@ -1029,14 +1030,47 @@
 			if(proceed_with_offer)
 				playsound(loc,'sound/items/carvty.ogg', 50, TRUE)
 				qdel(W)
+				// record global shrine value once using the saved donated amount (don't reference W after qdel)
+				GLOB.scarlet_round_stats[STATS_SHRINE_VALUE] += donatedamnt
+				// build full list for those to receive
+				var/list/bandit_list = list()
 				for(var/mob/player in GLOB.player_list)
 					if(player.mind)
+						var/is_bandit = FALSE
+						// bandit antag datum (villain or added by post_equip)
 						if(player.mind.has_antag_datum(/datum/antagonist/bandit))
-							var/datum/antagonist/bandit/bandit_players = player.mind.has_antag_datum(/datum/antagonist/bandit)
-							GLOB.scarlet_round_stats[STATS_SHRINE_VALUE] += W.get_real_price()
-							bandit_players.favor += donatedamnt
-							bandit_players.totaldonated += donatedamnt
-							to_chat(player, ("<font color='yellow'>[user.name] donates [donatedamnt] to the shrine! You now have [bandit_players.favor] favor.</font>"))
+							is_bandit = TRUE
+						// or the player's assigned job may be a bandit job (job flag)
+						else if(player.mind.assigned_role)
+							var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+							if(J && J.flag == BANDIT)
+								is_bandit = TRUE
+						if(is_bandit)
+							bandit_list += player // add to list
+				var/num_bandits = bandit_list.len
+				var/num_others = num_bandits - ((user in bandit_list) ? 1 : 0) // number of other bandits to share with
+				var/donor_in_list = (user in bandit_list)
+				var/other_share_base = 0
+				var/other_remainder = 0
+				if(num_others > 0)
+					other_share_base = floor(donatedamnt / num_others)
+					other_remainder = donatedamnt - (other_share_base * num_others)
+				for(var/mob/player in bandit_list)
+					var/datum/antagonist/bandit/bandit_players = player.mind.has_antag_datum(/datum/antagonist/bandit)
+					var/amt_to_give = 0 // ensure variable is declared in this scope
+					if(player == user && donor_in_list)
+						// donor receives the full donated amount (if they are a bandit)
+						amt_to_give = donatedamnt
+					else
+						// give each other bandit the base share and distribute remainder (+1) to the first recipients
+						amt_to_give = other_share_base
+						if(other_remainder > 0)
+							amt_to_give += 1
+							other_remainder -= 1
+					bandit_players.favor += amt_to_give // gain favor for donation
+					bandit_players.totaldonated += amt_to_give // track total donated for end of round stats
+					// Display rounded integer values only
+					to_chat(player, ("<font color='yellow'>[user.name] donates [round(donatedamnt)] to the shrine! You receive [round(amt_to_give)] favor and now have [round(bandit_players.favor)] favor.</font>"))
 
 			else
 				to_chat(user, span_warning("This item isn't a good offering."))
