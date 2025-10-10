@@ -221,6 +221,14 @@
 	craftdiff = 4
 	verbage_simple = "transmute"
 
+	/datum/crafting_recipe/roguetown/alchemy/tagtos
+	name = "gold and tin to silver"
+	category = "Transmutation"
+	result = list(/obj/item/rogueore/silver = 1)
+	reqs = list(/obj/item/rogueore/gold = 2, /obj/item/rogueore/tin = 4)
+	craftdiff = 6
+	verbage_simple = "transmute"
+
 /datum/crafting_recipe/roguetown/alchemy/g2top
 	name = "gold to toper"
 	category = "Transmutation"
