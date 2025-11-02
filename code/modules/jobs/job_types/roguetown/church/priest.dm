@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 
 	display_order = JDO_PRIEST
 	give_bank_account = 115
-	min_pq = 5 // You should know the basics of things if you're going to lead the town's entire religious sector
+	min_pq = 20 // You should know the basics of things if you're going to lead the town's entire religious sector
 	max_pq = null
 	round_contrib_points = 3
 
@@ -46,14 +46,6 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	job_subclasses = list(
 		/datum/advclass/bishop
 	)
-
-/datum/job/roguetown/priest/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
 
 /datum/advclass/bishop
 	name = "Bishop"
